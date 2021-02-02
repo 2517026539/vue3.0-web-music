@@ -1,0 +1,86 @@
+{
+  "id": "2351706",
+  "name": "xiaoxian music",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "vue3.0 web music",
+  "glyphs": [
+    {
+      "icon_id": "18758154",
+      "name": "right",
+      "font_class": "bottom",
+      "unicode": "e720",
+      "unicode_decimal": 59168
+    },
+    {
+      "icon_id": "17195210",
+      "name": "left",
+      "font_class": "left",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "13712363",
+      "name": "JamIcons chevron circle left f",
+      "font_class": "JamIconschevroncircleleftf",
+      "unicode": "edff",
+      "unicode_decimal": 60927
+    },
+    {
+      "icon_id": "19472741",
+      "name": "JamIcons chevron circle left f",
+      "font_class": "JamIconschevroncircleleftf1",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "367841",
+      "name": "theme",
+      "font_class": "theme1",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "718203",
+      "name": "setting",
+      "font_class": "setting",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "14678556",
+      "name": "search",
+      "font_class": "sw_sousuo",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "14959831",
+      "name": "theme",
+      "font_class": "theme",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "8373018",
+      "name": "music",
+      "font_class": "music",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "8001190",
+      "name": "status - test",
+      "font_class": "status-test",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "5075492",
+      "name": "音乐",
+      "font_class": "local",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}

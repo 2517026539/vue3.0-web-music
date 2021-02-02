@@ -1,15 +1,25 @@
 <template>
     <div>
-        暂时主页
+        <header>
+            <Header />
+        </header>
     </div>
 </template>
 
 <script>
-    export default {
-        name: "Home"
-    }
+import Header from '@/layout/header/Header.vue'
+export default {
+  name: 'Home',
+  components: {
+    Header
+  }
+}
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.home{
+    width: 100%;
+    height: 100px;
+    background-color: #6eff6d;
+}
 </style>
