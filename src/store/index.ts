@@ -1,12 +1,8 @@
 import { createStore } from 'vuex'
+import PassengerStore from './test'
 
 export default createStore({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
   modules: {
+    user: PassengerStore
   }
 })

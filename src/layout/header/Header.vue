@@ -1,11 +1,11 @@
 <template>
-  <header class="header">
+  <header class="header" :class="`${themeColor}-bg-primary_1`">
     <div class="header-title">
       <i class="iconfont iconmusic logo"></i>
       <span class="header-title-name">小 贤 音 乐</span>
     </div>
     <div class="header-history-left">
-      <i class="iconfont iconleft left"></i>
+      <i class="iconfont iconleft left" @click="goBack"></i>
     </div>
     <div class="header-history-right">
       <i class="iconfont iconleft right"></i>
@@ -14,18 +14,38 @@
       <SearchList/>
     </div>
     <div class="header-options">
-      <i class="iconfont iconsetting"></i>
-      <i class="iconfont icontheme1"></i>
+      <i class="iconfont iconsetting setting"></i>
+      <i class="iconfont icontheme1 theme" @click="changeThemeType"></i>
     </div>
   </header>
 </template>
 
-<script>
+<script lang="ts">
 import SearchList from '@/layout/header/SearchList'
+import { useRouter } from 'vue-router'
+import { themeStore, ThemeType } from '@/store/modules/theme'
+import { ref } from 'vue'
+
 export default {
   name: 'Header',
   components: {
     SearchList
+  },
+  setup () {
+    const themeColor = ref<ThemeType>('red')
+    const router = useRouter()
+    const goBack = () => {
+      router.go(-1)
+    }
+    const changeThemeType = () => {
+      themeColor.value = themeColor.value === 'red' ? 'black' : 'red'
+      themeStore.selectThemeType(themeColor.value)
+    }
+    return {
+      goBack,
+      changeThemeType,
+      themeColor
+    }
   }
 }
 </script>
@@ -38,6 +58,7 @@ export default {
   padding: 4px;
   font-size: 5px;
   background-color: rgba(0,0,0,.1);
+  cursor: pointer;
 }
 .header {
   position: fixed;
@@ -48,7 +69,7 @@ export default {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
-  background-color: #ec4141;
+  // background-color: #ec4141;
   align-items: center;
   .header-title {
     flex: 0 0 250px;
@@ -79,6 +100,23 @@ export default {
     transform: rotate(180deg);
     .right {
       @extend .header-history;
+    }
+  }
+  .header-options {
+    color: #f2f3f4;
+    .setting {
+      font-size: 23px;
+      font-weight: 200;
+      color: rgba(255, 255, 255, 0.8);
+      cursor: pointer;
+      margin: 0 5px;
+    }
+    .theme {
+      font-size: 21px;
+      font-weight: 200;
+      color: rgba(255,255,255, .8);
+      cursor: pointer;
+      margin: 0 5px;
     }
   }
 }
