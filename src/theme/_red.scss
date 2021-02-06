@@ -2,14 +2,14 @@
 $primary-color: #ec4141;
 $text-color: #444;
 
-
 // 头部字体颜色
 $header-text-color: #f2f3f4;
 // 左右按钮背景色
-$header-history-background: #d83b3b;
+$header-his-background: rgba(0,0,0,.1);
 // input框颜色
-$header-input-background: #e13e3e;
-$header-input-placeholder-color: #e66262;
+$header-in-background: rgba(0,0,0, .1);
+$header-in-color: rgba(255, 255, 255, 1);
+$header-in-placeholder-color: rgba(255, 255, 255, .5);
 
 
 
@@ -17,34 +17,25 @@ $header-input-placeholder-color: #e66262;
     background: $primary-color;
 }
 
+.red-color-primary_1 {
+    color: $primary-color
+}
+
 .red-cl-primary_1 {
     color: $primary-color;
 }
 
-.red-bg-primary_2 {
-    background: $header-history-background;
+.red-his-bg {
+    background-color: $header-his-background;
 }
 
-.red-cl-primary_2 {
-    color: $header-history-background;
+.red-in-bg {
+    background-color: $header-in-background;
 }
 
-.red-bg-primary_3 {
-    background: $header-input-placeholder-color;
-}
-
-.red-cl-primary_3 {
-    color: $header-input-placeholder-color;
-    
+.red-in-color {
+    color: $header-in-color;
     &::placeholder {
-        color: $header-input-placeholder-color;
+        color: $header-in-placeholder-color;
     }
-}
-
-.red-bg-primary_4 {
-    background: $header-input-background;
-}
-
-.red-cl-primary_4 {
-    color: $header-input-background;
 }

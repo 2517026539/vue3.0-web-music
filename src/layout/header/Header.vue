@@ -1,14 +1,14 @@
 <template>
   <header class="header" :class="`${themeColor}-bg-primary_1`">
     <div class="header-title">
-      <i class="iconfont iconmusic logo"></i>
-      <span class="header-title-name">小 贤 音 乐</span>
+      <i class="iconfont iconmusic logo" :class="`${themeColor}-color-primary_1`"></i>
+      <span class="header-title-name" >小 贤 音 乐</span>
     </div>
     <div class="header-history-left">
-      <i class="iconfont iconleft left" @click="goBack"></i>
+      <i class="iconfont iconleft left" :class="`${themeColor}-his-bg`" @click="goBack"></i>
     </div>
     <div class="header-history-right">
-      <i class="iconfont iconleft right"></i>
+      <i class="iconfont iconleft right" :class="`${themeColor}-his-bg`"></i>
     </div>
     <div class="header-input">
       <SearchList/>
@@ -24,7 +24,7 @@
 import SearchList from '@/layout/header/SearchList'
 import { useRouter } from 'vue-router'
 import { themeStore, ThemeType } from '@/store/modules/theme'
-import { ref } from 'vue'
+import { computed } from 'vue'
 
 export default {
   name: 'Header',
@@ -32,14 +32,14 @@ export default {
     SearchList
   },
   setup () {
-    const themeColor = ref<ThemeType>('red')
+    const themeColor = computed(() => themeStore.themeType)
     const router = useRouter()
     const goBack = () => {
       router.go(-1)
     }
     const changeThemeType = () => {
-      themeColor.value = themeColor.value === 'red' ? 'black' : 'red'
-      themeStore.selectThemeType(themeColor.value)
+      const changeColor: ThemeType = themeColor.value === 'red' ? 'black' : 'red'
+      themeStore.selectThemeType(changeColor)
     }
     return {
       goBack,
@@ -56,8 +56,7 @@ export default {
   border-radius: 50%;
   color: #f2f3f4;
   padding: 4px;
-  font-size: 5px;
-  background-color: rgba(0,0,0,.1);
+  font-size: 14px;
   cursor: pointer;
 }
 .header {
@@ -69,6 +68,7 @@ export default {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
+  z-index: 998;
   // background-color: #ec4141;
   align-items: center;
   .header-title {
@@ -78,7 +78,6 @@ export default {
     .logo {
       font-size: 22px;
       background-color: #f2f3f4;
-      color: #ec4141;
       padding: 2px;
       border-radius: 50%;
       margin-right: 6px;
@@ -98,6 +97,7 @@ export default {
   .header-history-right {
     text-align: center;
     transform: rotate(180deg);
+    margin-right: 10px;
     .right {
       @extend .header-history;
     }
