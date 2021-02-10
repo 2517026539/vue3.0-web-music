@@ -3,7 +3,6 @@ import { debounce } from '@/utils/util'
 import { themeStore } from '@/store/modules/theme'
 import useCommonSearch from '@/hooks/header/useCommonSearch'
 import useHotSearch from '@/hooks/header/useHotSearch'
-import { getKeyWordLists } from '@/api/search'
 import './index.scss'
 import { useRouter } from 'vue-router'
 
@@ -11,17 +10,19 @@ export default defineComponent({
   setup () {
     const themeType = computed(() => themeStore.themeType)
     const focusValue = ref<boolean>(false)
-    const keyWords = ref<string>('')
+    const keyWords = ref<string>('华')
     const router = useRouter()
+    const keyWordLists = ref<any>('')
     const { hotSearchDom } = useHotSearch(keyWords, focusValue, router)
-    const { useCommonDom } = useCommonSearch(keyWords, focusValue, router)
+    const { useCommonDom, getKeyWordListData } = useCommonSearch(keyWords, focusValue, router)
     const getFocus = ():void => {
       focusValue.value = true
     }
-    watch(keyWords, debounce(async () => {
-      const getLists = getKeyWordLists({keywords: keyWords.value})
-      console.log(getLists)
-    }, 1000))
+    // test
+    getKeyWordListData()
+    watch(keyWords, debounce(() => {
+      getKeyWordListData()
+    }, 300))
     const clickOutside = {
       value: () => {
         focusValue.value = false

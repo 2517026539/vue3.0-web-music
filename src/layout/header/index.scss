@@ -89,6 +89,49 @@
         }
       }
     }
+    .common-list {
+      padding-bottom: 5px;
+      .common-title {
+        padding: 0 10px;
+        height: 25px;
+        color: #787878;
+        line-height: 2;
+        span {
+          vertical-align: baseline;
+        }
+        .keyWord {
+          color: #6788ff;
+        }
+      }
+      .common-content {
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 350px;
+        .common-item-title {
+          line-height: 2;
+          height: 28px;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          background-color: #f4f4f4;
+          align-items: center;
+          cursor: pointer;
+          i {
+            flex: 0 0 28px;
+            text-align: center;
+          }
+        }
+        .common-item {
+          height: 28px;
+          text-indent: 28px;
+          line-height: 2;
+          cursor: pointer;
+          &:hover {
+            background-color: #f4f4f4;
+          }
+        }
+      }
+    }
   }
 }
 

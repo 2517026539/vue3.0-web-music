@@ -6,6 +6,34 @@
   "description": "vue3.0 web music",
   "glyphs": [
     {
+      "icon_id": "40242",
+      "name": "歌手",
+      "font_class": "ttpodicon",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "12892362",
+      "name": "歌单",
+      "font_class": "gedan",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "13086864",
+      "name": "单曲",
+      "font_class": "danqu",
+      "unicode": "e6ab",
+      "unicode_decimal": 59051
+    },
+    {
+      "icon_id": "16588329",
+      "name": "专辑",
+      "font_class": "zhuanji",
+      "unicode": "e707",
+      "unicode_decimal": 59143
+    },
+    {
       "icon_id": "18758154",
       "name": "right",
       "font_class": "bottom",
