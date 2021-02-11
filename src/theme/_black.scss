@@ -2,18 +2,51 @@
 $primary-color: #212124;
 $text-color: #D0D0D0;
 
-
 // 头部字体颜色
 $header-text-color: #f2f3f4;
 // 左右按钮背景色
-$header-his-background: rgba(65, 65, 65, .7);
+$header-his-background: rgb(30, 30, 33);
 // input框颜色
-$header-in-background: rgba(65, 65, 65, .7);
-$header-in-color: rgba(255, 255, 255, 1);
-$header-in-placeholder-color: rgba(255, 255, 255, .5);
+$header-in-background: rgb(43, 43, 46);
+$header-in-color: rgb(255, 255, 255);
+$header-in-placeholder-color: rgb(77, 77, 79);
+// themeType框颜色
+$header-theme-bg: rgb(54, 54, 54);
 
+// 字体颜色
+.black-color-1 {
+    color: #313131;
+}
 
+.black-color-2 {
+    color: #000001;
+}
 
+.black-color-3 {
+    color: #989898;
+}
+
+.black-color-4 {
+    color: #d0d0d0;
+}
+
+.black-color-5 {
+    color: #353535;
+}
+
+//背景颜色
+.black-bg-1 {
+    background-color: #2b2b2b;
+}
+
+.black-bg-2 {
+    background-color: #4d4d4f;
+}
+
+.black-bg-3 {
+    background-color: #333333;
+}
+//主题背景色
 .black-bg-primary_1 {
     background: $primary-color;
 }
@@ -36,7 +69,12 @@ $header-in-placeholder-color: rgba(255, 255, 255, .5);
 
 .black-in-color {
     color: $header-in-color;
+
     &::placeholder {
        color: $header-in-placeholder-color;
     }
+}
+
+.black-theme-bg {
+    background-color: $header-theme-bg;
 }

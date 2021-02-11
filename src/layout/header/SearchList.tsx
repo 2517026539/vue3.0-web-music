@@ -10,16 +10,13 @@ export default defineComponent({
   setup () {
     const themeType = computed(() => themeStore.themeType)
     const focusValue = ref<boolean>(false)
-    const keyWords = ref<string>('华')
+    const keyWords = ref<string>('')
     const router = useRouter()
-    const keyWordLists = ref<any>('')
     const { hotSearchDom } = useHotSearch(keyWords, focusValue, router)
     const { useCommonDom, getKeyWordListData } = useCommonSearch(keyWords, focusValue, router)
     const getFocus = ():void => {
       focusValue.value = true
     }
-    // test
-    getKeyWordListData()
     watch(keyWords, debounce(() => {
       getKeyWordListData()
     }, 300))
@@ -29,7 +26,12 @@ export default defineComponent({
       },
       arg: 'search-input'
     }
-
+    const keyEnter = (e: KeyboardEvent) => {
+      if (e.code === 'Enter') {
+        focusValue.value = false
+        // /search?keywords= 海阔天空 /cloudsearch?keywords= 海阔天空 路由跳转到搜索组件
+      }
+    }
     const boxCard = () => {
       return <div class="list-card" v-outside={clickOutside}>
         {
@@ -48,6 +50,7 @@ export default defineComponent({
           v-model={ keyWords.value }
           class={`search ${themeType.value}-in-bg ${themeType.value}-in-color`}
           onFocus={getFocus}
+          onKeyup={keyEnter}
         />
         <i class="iconfont iconsw_sousuo icon-search"></i>
         {

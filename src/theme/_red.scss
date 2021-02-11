@@ -1,24 +1,58 @@
 // 统一的主题色与字体颜色
-$primary-color: #ec4141;
+$primary-color: #eb4141;
 $text-color: #444;
 
 // 头部字体颜色
-$header-text-color: #f2f3f4;
+$header-text-color: #ffffff;
 // 左右按钮背景色
-$header-his-background: rgba(0,0,0,.1);
+$header-his-background: rgb(217, 59, 59);
 // input框颜色
-$header-in-background: rgba(0,0,0, .1);
-$header-in-color: rgba(255, 255, 255, 1);
-$header-in-placeholder-color: rgba(255, 255, 255, .5);
+$header-in-background: rgb(225, 62, 62);
+$header-in-color: rgb(255, 252, 252);
+$header-in-placeholder-color: rgb(230, 99, 99);
+// themeType框颜色
+$header-theme-bg: rgb(255, 255, 255);
 
+// 字体颜色
+.red-color-1 {
+    color: #313131;
+}
 
+.red-color-2 {
+    color: #000001;
+}
 
+.red-color-3 {
+    color: #989898;
+}
+
+.red-color-4 {
+    color: #373737;
+}
+
+.red-color-5 {
+    color: #353535;
+}
+
+//背景颜色
+.red-bg-1 {
+    background-color: #ffffff;
+}
+
+.red-bg-2 {
+    background-color: #f5f5f6;
+}
+
+.red-bg-3 {
+    background-color: #f4f4f4;
+}
+//主题背景色
 .red-bg-primary_1 {
     background: $primary-color;
 }
 
 .red-color-primary_1 {
-    color: $primary-color
+    color: $primary-color;
 }
 
 .red-cl-primary_1 {
@@ -35,7 +69,12 @@ $header-in-placeholder-color: rgba(255, 255, 255, .5);
 
 .red-in-color {
     color: $header-in-color;
+
     &::placeholder {
         color: $header-in-placeholder-color;
     }
+}
+
+.red-theme-bg {
+    background-color: $header-theme-bg;
 }

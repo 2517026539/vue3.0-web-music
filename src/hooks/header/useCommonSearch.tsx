@@ -18,7 +18,7 @@ export default function (keyWord, focusValue, router) {
         </div>
         <div class="common-content">
           {
-            keyWordLists.value.order && keyWordLists.value.order.indexOf('songs') !== -1
+            keyWordLists.value && keyWordLists.value.order && keyWordLists.value.order.indexOf('songs') !== -1 && keyWordLists.value.songs
               ? <>
                   <h1 class="common-item-title"><i class="iconfont icondanqu"></i><span>单曲</span></h1>
                   {keyWordLists.value.songs.map(item => {
@@ -30,7 +30,7 @@ export default function (keyWord, focusValue, router) {
               : null
           }
           {
-            keyWordLists.value.order && keyWordLists.value.order.indexOf('artists') !== -1
+            keyWordLists.value && keyWordLists.value.order && keyWordLists.value.order.indexOf('artists') !== -1 && keyWordLists.value.artists
               ? <>
                   <h1 class="common-item-title"><i class="iconfont iconttpodicon"></i><span>歌手</span></h1>
                   {keyWordLists.value.artists.map(item => {
@@ -42,7 +42,7 @@ export default function (keyWord, focusValue, router) {
               : null
           }
           {
-            keyWordLists.value.order && keyWordLists.value.order.indexOf('albums') !== -1
+            keyWordLists.value && keyWordLists.value.order && keyWordLists.value.order.indexOf('albums') !== -1 && keyWordLists.value.albums
               ? <>
                   <h1 class="common-item-title"><i class="iconfont iconzhuanji"></i><span>专辑</span></h1>
                   {keyWordLists.value.albums.map(item => {
@@ -54,7 +54,7 @@ export default function (keyWord, focusValue, router) {
               : null
           }
           {
-            keyWordLists.value.order && keyWordLists.value.order.indexOf('playlists') !== -1
+            keyWordLists.value && keyWordLists.value.order && keyWordLists.value.order.indexOf('playlists') !== -1 && keyWordLists.value.playlists
               ? <>
                   <h1 class="common-item-title"><i class="iconfont icongedan"></i><span>歌单</span></h1>
                   {keyWordLists.value.playLists.map(item => {

@@ -15,36 +15,47 @@
     </div>
     <div class="header-options">
       <i class="iconfont iconsetting setting"></i>
-      <i class="iconfont icontheme1 theme" @click="changeThemeType"></i>
+      <i class="iconfont icontheme1 theme" id="theme" @click="showThemeSelect"></i>
+      <template v-if="showTheme">
+        <ThemeSelect @clickOutsideClose="clickOutsideClose"/>
+      </template>
     </div>
   </header>
 </template>
 
 <script lang="ts">
 import SearchList from '@/layout/header/SearchList'
+import ThemeSelect from '@/layout/header/ThemeSelect'
 import { useRouter } from 'vue-router'
-import { themeStore, ThemeType } from '@/store/modules/theme'
-import { computed } from 'vue'
+import { themeStore } from '@/store/modules/theme'
+import { computed, ref } from 'vue'
 
 export default {
   name: 'Header',
   components: {
-    SearchList
+    SearchList,
+    ThemeSelect
   },
   setup () {
+    const showTheme = ref<boolean>(false)
     const themeColor = computed(() => themeStore.themeType)
     const router = useRouter()
-    const goBack = () => {
+    const goBack = (): void => {
       router.go(-1)
     }
-    const changeThemeType = () => {
-      const changeColor: ThemeType = themeColor.value === 'red' ? 'black' : 'red'
-      themeStore.selectThemeType(changeColor)
+    const showThemeSelect = (): void => {
+      showTheme.value = !showTheme.value
+    }
+    const clickOutsideClose = (): void => {
+      console.log(1)
+      showTheme.value = false
     }
     return {
       goBack,
-      changeThemeType,
-      themeColor
+      themeColor,
+      showTheme,
+      showThemeSelect,
+      clickOutsideClose
     }
   }
 }
@@ -52,71 +63,83 @@ export default {
 
 <style lang="scss" scoped>
 .header-history {
-  margin: 0 3px;
-  border-radius: 50%;
-  color: #f2f3f4;
   padding: 4px;
+  margin: 0 3px;
   font-size: 14px;
+  color: #f2f3f4;
   cursor: pointer;
+  border-radius: 50%;
 }
+
 .header {
   position: fixed;
   top: 0;
-  left: 0;
   right: 0;
-  height: $header-height;
+  left: 0;
+  z-index: 998;
   display: flex;
+  height: $header-height;
   flex-wrap: nowrap;
   flex-direction: row;
-  z-index: 998;
   // background-color: #ec4141;
   align-items: center;
+
   .header-title {
-    flex: 0 0 250px;
-    box-sizing: border-box;
     padding-left: 25px;
+    box-sizing: border-box;
+    flex: 0 0 250px;
+
     .logo {
+      padding: 2px;
+      margin-right: 6px;
       font-size: 22px;
       background-color: #f2f3f4;
-      padding: 2px;
       border-radius: 50%;
-      margin-right: 6px;
     }
+
     .header-title-name {
       font-size: 18px;
-      color: #f2f3f4;
       font-weight: 500;
+      color: #f2f3f4;
     }
   }
+
   .header-history-left {
     text-align: center;
+
     .left {
       @extend .header-history;
     }
   }
+
   .header-history-right {
+    margin-right: 10px;
     text-align: center;
     transform: rotate(180deg);
-    margin-right: 10px;
+
     .right {
       @extend .header-history;
     }
   }
+
   .header-options {
+    position: relative;
     color: #f2f3f4;
+
     .setting {
+      margin: 0 5px;
       font-size: 23px;
       font-weight: 200;
       color: rgba(255, 255, 255, 0.8);
       cursor: pointer;
-      margin: 0 5px;
     }
+
     .theme {
+      margin: 0 5px;
       font-size: 21px;
       font-weight: 200;
       color: rgba(255,255,255, .8);
       cursor: pointer;
-      margin: 0 5px;
     }
   }
 }

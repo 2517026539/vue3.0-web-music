@@ -1,136 +1,212 @@
 .header-search {
   position: relative;
+
   .search {
     width: 180px;
     padding: 6px 10px 6px 26px;
+    font-size: 0.1rem;
     border: 0;
     border-radius: 14px;
     box-sizing: border-box;
-    font-size: 0.1rem;
   }
+
   .icon-search {
     position: absolute;
     top: 50%;
     left: 8px;
     font-size: 0.1rem;
-    transform: translateY(-50%);
     color: rgba(255, 255, 255, .8);
+    transform: translateY(-50%);
 
   }
+
   .list-card {
     position: absolute;
     top: 30px;
     left: -20%;
-    background-color: rgba(255, 255, 255, 1);
+    z-index: 999;
     width: 350px;
     min-height: 50px;
-    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 1);
     border: 1px solid #f4f4f4;
-    z-index: 999;
+    border-radius: 10px;
+
     .hot-list {
+      max-height: 300px;
       margin: 5px 0;
       overflow-x: hidden;
       overflow-y: auto;
-      max-height: 300px;
+
       .hot-title {
+        height: 30px;
+        margin: 7px 0;
         font-size: 15px;
         line-height: 2;
         color: #666;
-        height: 30px;
-        margin: 7px 0;
         text-indent: 20px;
       }
+
       .hot-li {
         display: flex;
-        align-items: center;
-        flex-direction: row;
         height: 50px;
         cursor: pointer;
+        align-items: center;
+        flex-direction: row;
+
         .index {
-          font-size: 14px;
-          color: #666666;
-          text-align: center;
           width: 50px;
+          font-size: 14px;
+          color: #666;
+          text-align: center;
         }
+
         .red {
           color: #ec4141;
         }
+
         .hot-content {
           flex: 1;
+
           .header-content {
             .searchWord {
-              vertical-align: baseline;
               margin-right: 5px;
               font-size: 13px;
               color: #333;
+              vertical-align: baseline;
             }
+
             .blod {
               font-weight: bold;
             }
+
             .img {
-              height: 15px;
               width: 25px;
-              object-fit: contain;
+              height: 15px;
               vertical-align: baseline;
+              object-fit: contain;
             }
+
             .score {
-              color: #cbcbcb;
               margin-left: 6px;
+              color: #cbcbcb;
             }
           }
+
           .foot-content {
             margin-top: 6px;
-            color: #bfbfbf;
             font-size: 12px;
+            color: #bfbfbf;
           }
         }
+
         &:hover {
           background-color: #f4f4f4;
         }
       }
     }
+
     .common-list {
       padding-bottom: 5px;
+
       .common-title {
-        padding: 0 10px;
         height: 25px;
-        color: #787878;
+        padding: 0 10px;
         line-height: 2;
+        color: #787878;
+
         span {
           vertical-align: baseline;
         }
+
         .keyWord {
           color: #6788ff;
         }
       }
+
       .common-content {
-        overflow-y: auto;
-        overflow-x: hidden;
         max-height: 350px;
+        overflow-x: hidden;
+        overflow-y: auto;
+
         .common-item-title {
-          line-height: 2;
-          height: 28px;
           display: flex;
+          height: 28px;
+          line-height: 2;
+          cursor: pointer;
+          background-color: #f4f4f4;
           flex-direction: row;
           flex-wrap: nowrap;
-          background-color: #f4f4f4;
           align-items: center;
-          cursor: pointer;
+
           i {
-            flex: 0 0 28px;
             text-align: center;
+            flex: 0 0 28px;
           }
         }
+
         .common-item {
           height: 28px;
-          text-indent: 28px;
           line-height: 2;
+          text-indent: 28px;
           cursor: pointer;
+
           &:hover {
             background-color: #f4f4f4;
           }
         }
       }
+    }
+  }
+}
+
+.themeSelect {
+  position: absolute;
+  top: 100%;
+  left: 20%;
+  z-index: 999;
+  width: 100px;
+  padding: 7px 5px;
+  border-radius: 5px;
+  transform: translateY(4px);
+  overflow: hidden;
+
+  .theme-title {
+    color: #333333;
+    font-weight: bold;
+    padding: 5px 10px 5px 0;
+    margin-bottom: 5px;
+    background-color: #cbcbcb;
+    border-radius: 5px;
+    text-indent: 3px;
+  }
+
+  .themeList {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-top: 5px;
+    padding-top: 5px;
+
+    .themeItem {
+      width: 18px;
+      height: 18px;
+      margin: 0 5px;
+      cursor: pointer;
+      border-radius: 50%;
+      box-sizing: border-box;
+
+      &:hover {
+        opacity: .8;
+        box-shadow: 0 2px 2px #666;
+      }
+    }
+
+    .red {
+      background-color: #ec4141;
+    }
+
+    .black {
+      background-color: #212124;
     }
   }
 }

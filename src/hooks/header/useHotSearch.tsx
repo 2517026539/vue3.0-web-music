@@ -24,7 +24,7 @@ export default function (keyword, focusValue, router) {
       <h1 class='hot-title'>热搜榜</h1>
       <ul>
         {
-          hotList.value.map((item, index) => {
+          hotList.value && hotList.value.map((item, index) => {
             return (<li class='hot-li' onClick={() => { clickMusicList(item.searchWord) }}>
               <span class={ 'index ' + ((index + 1) > 3 ? '' : 'red') }>{ index + 1 }</span>
               <div class='hot-content'>
