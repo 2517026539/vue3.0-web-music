@@ -6,7 +6,8 @@
       <div class="left">
         <Aside />
       </div>
-      <div class="right">
+      <div class="right" :class="{cover : isCover}" :style="{ bottom : isShowPlayer ? 0 : '70px' }">
+        <HeaderTabs v-if="!isCover" :tabsList="tabsList" :defaultActive="defaultActive" @tabsRouteChange="tabsRouteChange"/>
         <router-view></router-view>
       </div>
     </div>
@@ -15,14 +16,70 @@
 <script lang="ts">
 import Header from '@/layout/header/Header.vue'
 import Aside from '@/layout/aside/Aside.vue'
-import { defineComponent } from 'vue'
+import HeaderTabs from '@/components/header-tabs/index.vue'
+import { defineComponent, ref, computed, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import TabItem from '@/components/header-tabs/type'
 
 export default defineComponent({
   name: 'Home',
   components: {
     Header,
-    Aside
+    Aside,
+    HeaderTabs
+  },
+  setup () {
+    const route = useRoute()
+    const router = useRouter()
+    const isShowPlayer = ref<boolean>(false)
+    const isCover = ref<boolean>(false)
+    const tabsList = ref<TabItem[]>([
+      {
+        name: '个性推荐',
+        match: 'Recommend',
+        path: '/recommend'
+      },
+      {
+        name: '歌单',
+        match: 'Playlists',
+        path: '/playlists'
+      },
+      {
+        name: '排行榜',
+        match: 'Rank',
+        path: '/rank'
+      },
+      {
+        name: '歌手',
+        match: 'Singer',
+        path: '/singer'
+      },
+      {
+        name: '最新音乐',
+        match: 'LastestMusic',
+        path: '/lastestmusic'
+      }
+    ])
+    const defaultActive = computed(() => route.name)
+    const tabsRouteChange = (path: string) => {
+      router.push(path)
+    }
+    watch(() => route.meta, (meta) => {
+      if (meta && meta.isCover && meta.isCover === true) {
+        isCover.value = true
+      } else {
+        isCover.value = false
+      }
+    })
+    return {
+      isShowPlayer,
+      isCover,
+      tabsList,
+      defaultActive,
+      tabsRouteChange
+    }
   }
+
 })
 </script>
 
@@ -44,8 +101,13 @@ export default defineComponent({
   position: fixed;
   top: $header-height;
   right: 0;
-  bottom: 0;
   left: $sidebar-width;
-  background-color: yellow;
+  box-sizing: border-box;
+  padding-left: 30px;
+  background-color: #fff;
+}
+
+.cover {
+  padding-left: 0;
 }
 </style>
