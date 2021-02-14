@@ -99,55 +99,50 @@ $primary-color: #ec4141;
 }
 
 .loading {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    z-index: 99999;
-    transform: translate(-50%, -50%);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-    > div {
-      position: absolute;
-      width: 48px;
-      height: 48px;
-      background: #ed4141;
-      border-radius: 50%;
-      opacity: 0.6;
-      -webkit-animation: loading 1.5s ease-in infinite;
-              animation: loading 1.5s ease-in infinite;
+  > div {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    background-color: #ec4141;
+    border-radius: 50%;
+    opacity: .9;
+    -webkit-animation: loading 1.5s ease-in infinite;
+    animation: loading 1.5s ease-in infinite;
 
-      &:nth-child(2) {
-        -webkit-animation-delay: -0.8s;
-                animation-delay: -0.8s;
-      }
+    &:nth-child(2) {
+      -webkit-animation-delay: -0.9s;
+      animation-delay: -0.9s;
+      opacity: .6;
     }
   }
+}
 
-  @-webkit-keyframes loading {
-    0% {
-      transform: scale(0);
-    }
-
-    50% {
-      transform: scale(1);
-    }
-
-    100% {
-      transform: scale(0);
-    }
+@keyframes loading {
+  0% {
+    transform: scale(0);
   }
-
-  @keyframes loading {
-    0% {
-      transform: scale(0);
-    }
-
-    50% {
-      transform: scale(1);
-    }
-
-    100% {
-      transform: scale(0);
-    }
+  50% {
+    transform: scale(1);
   }
+  100% {
+    transform: scale(0);
+  }
+}
 
+@-webkit-keyframes loading {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
 
