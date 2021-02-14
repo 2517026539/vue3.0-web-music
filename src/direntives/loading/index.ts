@@ -1,16 +1,20 @@
-import createLoading from './createLoadingElement'
+import initDom from './createLoadingElement'
 
 const loading = {
   mounted (el, binding) {
-    const instance = createLoading(binding.value)
+    const instance = initDom(binding.value)
     el.instance = instance
   },
-  updated: (el, binding) => {
+  updated (el, binding) {
+    const { instance } = el
+    if (!el.instance) {
+      return
+    }
     if (binding.oldValue !== binding.value) {
-      if (el.instance.visible.value && !binding.value) {
-        el.instance.visible.value = false
+      if (instance.isShow.value && !binding.value) {
+        instance.isShow.value = false
       } else {
-        el.instance.visible.value = true
+        instance.isShow.value = true
       }
     }
   }

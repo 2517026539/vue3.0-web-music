@@ -1,39 +1,55 @@
 <template>
-  <div class="recommend" v-loading="test" >
-    recommend
-    <input type="text" />
-    <div>
-      <span>{{count}}</span>
-    </div>
-    <span></span>
-    <button @click="handleChange">
-      点击加一
-    </button>
+  <div class="recommend" v-loading="isLoading" >
+    <Swiper v-if="bannerLists.length" :bannerLists="bannerLists"/>
+    <h1 class="recommend-title" @click="handleChangePlaylists">推荐歌单></h1>
+    <Personalized v-if="personalized.length" :playlist="personalized" />
   </div>
 </template>
 
 <script lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import Swiper from '@/components/swiper/index.vue'
+import Personalized from '@/components/playlist/index.vue'
+import {
+  getBanner,
+  getPersonalized
+} from '@/api/recommend'
 export default {
   name: 'index',
+  components: {
+    Swiper,
+    Personalized
+  },
   setup () {
-    const count = ref<number>(1)
-    const test = ref<boolean>(true)
-    setTimeout(() => {
-      test.value = false
-      console.log(test.value)
-    }, 3000)
-    const handleChange = () => {
-      count.value++
-      test.value = true
-      setTimeout(() => {
-        test.value = false
-      }, 3000)
+    const router = useRouter()
+    const isLoading = ref<boolean>(false)
+    const bannerLists = ref<any[]>([])
+    const personalized = ref<any[]>([])
+    const init = async () => {
+      isLoading.value = true
+      try {
+        bannerLists.value = await getBanner()
+        personalized.value = await getPersonalized()
+      } catch (e) {
+        // throw Error(e)
+      }
+      isLoading.value = false
     }
+
+    const handleChangePlaylists = () => {
+      router.push('/playlists')
+    }
+
+    onMounted(() => {
+      init()
+    })
+
     return {
-      count,
-      test,
-      handleChange
+      isLoading,
+      bannerLists,
+      handleChangePlaylists,
+      personalized
     }
   }
 }
@@ -43,5 +59,18 @@ export default {
 .recommend {
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
+  padding-right: 30px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  .recommend-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000001;
+    cursor: pointer;
+    margin-bottom: 15px;
+    margin-top: 10px;
+  }
 }
 </style>

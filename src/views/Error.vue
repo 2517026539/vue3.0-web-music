@@ -1,13 +1,13 @@
 <template>
-    <div>
-        error页面
-    </div>
+  <div>
+    error页面
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "Error"
-    }
+export default {
+  name: 'Error'
+}
 </script>
 
 <style scoped>
