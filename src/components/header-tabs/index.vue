@@ -32,10 +32,17 @@ export default {
 <style lang="scss" scoped>
 .header-tabs {
   display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
   flex-direction: row;
   height: 60px;
   align-items: center;
   width: 100%;
+  z-index: 3;
+  background-color: #fff;
+  padding-left: 30px;
+  box-sizing: border-box;
 
   .header-tabs-item {
     font-size: 16px;

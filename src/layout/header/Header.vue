@@ -76,7 +76,7 @@ export default {
   top: 0;
   right: 0;
   left: 0;
-  z-index: 998;
+  z-index: 4;
   display: flex;
   height: $header-height;
   flex-wrap: nowrap;

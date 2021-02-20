@@ -1,44 +1,75 @@
 <template>
-    <div>
-      <ul v-if="userList.length">
-        <li v-for="(item, index) of userList" :key="index">
-          <span>账号：{{item.username}}</span>
-          <span>密码：{{item.password}}</span>
-        </li>
-      </ul>
-      <button @click="addUser">点击增加</button>
+  <div class="content" ref="contentRef">
+    <div class="box-1" ref="box1Ref">
+      <div class="item" ref="itemRef"></div>
     </div>
+    <div class="box-2">
+      <div class="item-2"></div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import PassengerStore from '@/store/test'
-import { getModule } from 'vuex-module-decorators'
-import { useStore } from 'vuex'
-import { computed } from 'vue'
+import { ref, onMounted } from 'vue'
 export default {
   name: 'Test',
   setup () {
-    const store = useStore()
-    const userInfoModule = getModule(PassengerStore, store)
-    const userList = computed(() => {
-      return userInfoModule.loginInfo
+    const contentRef = ref<HTMLElement | null>(null)
+    const box1Ref = ref<HTMLElement | null>(null)
+    const itemRef = ref<HTMLElement | null>(null)
+    onMounted(() => {
+      console.log('clientWidth:' + itemRef.value.clientWidth)
+      console.log('offSetWidth' + itemRef.value.offsetWidth)
+      console.log('scrollWidth' + itemRef.value.scrollWidth)
+      console.log('offsetTop' + itemRef.value.offsetLeft)
+      console.log('scrollTop' + itemRef.value.scrollTop)
+      console.log('clientTop' + itemRef.value.clientTop)
     })
-    const addUser = () => {
-      const userInfo: { username: string, password: string } = { username: 'xiaohua', password: '123456' }
-      console.log(userInfo)
-      userInfoModule.getLisi(userInfo)
-    }
-    console.log(userInfoModule.loginInfo)
-    userInfoModule.getLisi({ username: 'xiaoxian', password: '131452' })
-    console.log(userInfoModule.loginInfo)
     return {
-      userList,
-      addUser
+      contentRef,
+      box1Ref,
+      itemRef
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
 
+  .box-1 {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    background-color: pink;
+
+    .item {
+      position: absolute;
+      top: 100px;
+      left: 100px;
+      padding: 10px;
+      margin: 10px;
+      border: 2px solid #333333;
+      width: 100px;
+      height: 100px;
+      background-color: yellowgreen;
+    }
+  }
+
+  .box-2 {
+    height: 100px;
+    width: 100px;
+    background-color: red;
+
+    .item-2 {
+      height: 120px;
+      width: 120px;
+      background-color: #0c73c2;
+    }
+  }
+}
 </style>

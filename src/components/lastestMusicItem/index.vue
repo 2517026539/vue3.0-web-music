@@ -1,5 +1,5 @@
 <template>
-  <div class="lastest-music-item-left">
+  <div class="lastest-music-item-left" @click="selectMusic">
     <img :src="lastestMusicItemData.picUrl" alt="#">
     <i class="iconfont icon65zanting bofang"></i>
   </div>
@@ -26,10 +26,18 @@ export default {
       default: () => {
         return {}
       }
+    },
+    index: {
+      type: Number
     }
   },
-  setup () {
-    return {}
+  setup (props) {
+    const selectMusic = () => {
+      console.log(props.index)
+    }
+    return {
+      selectMusic
+    }
   }
 }
 </script>
@@ -69,7 +77,6 @@ export default {
   .music-name {
     font-size: 14px;
     padding-top: 2px;
-
     .music-alias {
       color: #666666;
     }
@@ -81,7 +88,7 @@ export default {
     padding-bottom: 2px;
 
     .music-type {
-      border: 2px solid #ec4141;
+      border: 1.5px solid #ec4141;
       border-radius: 4px;
       color: #ec4141;
       font-size: 14px;

@@ -15,8 +15,8 @@
     </ul>
     <h1 class="recommend-title" @click="handleChangeLastestMusic">最新音乐></h1>
     <ul class="lastest-music-list">
-      <li class="lastest-music-item" v-for="item of lastestMusicList" :key="item">
-        <LastestMusic :lastestMusicItemData="item"/>
+      <li class="lastest-music-item" v-for="(item, index) of lastestMusicList" :key="item" @dblclick="selectMusic(item.id)">
+        <LastestMusic :lastestMusicItemData="item" :index="index"/>
       </li>
     </ul>
     <h1 class="recommend-title" @click="handleChangeRecommendMv">推荐MV></h1>
@@ -36,6 +36,7 @@ import Personalized from '@/components/playlistItem/index.vue'
 import OwnerSend from '@/views/recommend/components/OwnerSend.vue'
 import LastestMusic from '@/components/lastestMusicItem/index.vue'
 import RecommendMv from './components/RecommendMv.vue'
+import { player } from '@/store/modules/palyer'
 import {
   getBanner,
   getPersonalized,
@@ -91,6 +92,14 @@ export default {
       console.log('handleChangeRecommendMv')
     }
 
+    // 选择播放歌曲
+    const selectMusic = (id) => {
+      const list = lastestMusicList.value.map(item => {
+        return item.id
+      })
+      player.changeSonglist({ list, id })
+    }
+
     onMounted(() => {
       init()
     })
@@ -102,6 +111,7 @@ export default {
       handleOwner,
       handleChangeLastestMusic,
       handleChangeRecommendMv,
+      selectMusic,
       personalized,
       ownerSendList,
       lastestMusicList,
@@ -122,10 +132,10 @@ export default {
 .recommend {
   width: 100%;
   height: 100%;
+  padding-top: 60px;
   box-sizing: border-box;
   padding-right: 30px;
   overflow-x: hidden;
-  overflow-y: scroll;
 
   .recommend-title {
     font-size: 20px;
