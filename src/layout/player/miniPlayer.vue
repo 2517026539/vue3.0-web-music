@@ -139,11 +139,7 @@ export default {
 
     const changeBofangType = () => {
       const index = listenTypeList.value.indexOf(selectListenType.value)
-      if (index >= listenTypeList.value.length - 1) {
-        player.changeListenType(0)
-      } else {
-        player.changeListenType(index + 1)
-      }
+      player.changeListenType(index)
       showBofangType.value = true
       setTimeout(() => {
         showBofangType.value = false

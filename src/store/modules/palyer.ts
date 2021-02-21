@@ -90,7 +90,11 @@ class Player extends VuexModule {
 
   @Mutation
   [CHANGE_LISTENTYPE] (index) {
-    this.selectListenType = this.listenTypeList[index]
+    if (index < this.selectListenType.length - 1) {
+      this.selectListenType = this.listenTypeList[index + 1]
+    } else {
+      this.selectListenType = this.listenTypeList[0]
+    }
     _setListenType(this.selectListenType)
   }
 
