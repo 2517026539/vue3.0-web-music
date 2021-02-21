@@ -1,5 +1,6 @@
 import { getKeyWordLists } from '@/api/search'
 import { useRouter } from 'vue-router'
+import { player } from '@/store/modules/palyer'
 import { ref } from 'vue'
 
 export default function (keyWord, focusValue, router) {
@@ -7,6 +8,10 @@ export default function (keyWord, focusValue, router) {
   const getKeyWordListData = async () => {
     const getLists = await getKeyWordLists({ keywords: keyWord.value })
     keyWordLists.value = getLists
+  }
+  const danquSelect = (id) => {
+    player.selectDanqu(id)
+    focusValue.value = false
   }
   const useCommonDom = () => {
     return (
@@ -22,7 +27,7 @@ export default function (keyWord, focusValue, router) {
               ? <>
                   <h1 class="common-item-title"><i class="iconfont icondanqu"></i><span>单曲</span></h1>
                   {keyWordLists.value.songs.map(item => {
-                    return <div class="common-item">
+                    return <div class="common-item" onClick={() => danquSelect(item.id)}>
                       <span>{item.name} - {item.artistListStr}</span>
                     </div>
                   })}

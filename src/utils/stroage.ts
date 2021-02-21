@@ -66,3 +66,11 @@ export const _setVolume = (volume): void => {
 export const _getVolume = (): number => {
   return JSON.parse(sessionStorage.getItem('volume')) !== null ? JSON.parse(sessionStorage.getItem('volume')) : 0.5
 }
+
+export const _setListenType = (listenType: string): void => {
+  sessionStorage.setItem('listenType', JSON.stringify(listenType))
+}
+
+export const _getListenType = (): string => {
+  return JSON.parse(sessionStorage.getItem('listenType')) !== null ? JSON.parse(sessionStorage.getItem('listenType')) : 'order'
+}

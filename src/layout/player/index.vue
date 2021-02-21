@@ -33,8 +33,6 @@ export default {
     const isShowPlayer = computed(() => player.isShowPlayer)
     const playing = computed(() => player.playing)
     const volume = computed(() => player.volume)
-    const currentIndex = computed(() => player.currentIndex)
-    const currentSongLists = computed(() => player.currentSongLists)
     const playerData = reactive({
       startTime: 0,
       endTime: 0,
@@ -66,12 +64,27 @@ export default {
       playerData.endTime = 0
       playerData.startTime = 0
       playerData.percentage = 0
-      player.nextSong()
+      switch (player.selectListenType) {
+        case 'order':
+          player.nextSong()
+          break
+        case 'random':
+          player.randomPlay()
+          break
+        case 'single':
+          audioRef.value.play()
+          break
+        default:
+          player.nextSong()
+      }
     }
 
     // 播放出错时，执行方法
-    const audioError = (err) => {
-      console.log(err)
+    const audioError = () => {
+      playerData.endTime = 0
+      playerData.startTime = 0
+      playerData.percentage = 0
+      player.nextSong()
     }
 
     // 播放时间进度更新时
@@ -90,6 +103,8 @@ export default {
             audioRef.value.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`
             if (oldValue && oldValue[1] === index && oldValue[0] === songLists) {
               audioRef.value.currentTime = playerData.startTime
+            } else {
+              player.getSongDetails(songLists[index as number])
             }
             playerData.startTime = audioRef.value.currentTime
             audioRef.value.volume = volume.value

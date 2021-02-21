@@ -3,25 +3,37 @@
     <div class="left">
       <div class="song-img">
         <i class="iconfont iconiconset0441"></i>
-        <img src="@/assets/logo.png" alt="">
+        <img :src="picUrl" alt="">
       </div>
       <div class="name">
-        <span class="song-name">侍约1111111111111111111111111111111111111111111111111111111111111</span>
-        <span class="artist-name">陈伟霆</span>
+        <div class="song-name" :title="songName + aliasStr">
+          {{songName}}
+          <span class="song-name-alias">{{aliasStr}}</span>
+        </div>
+        <div class="artist-name" >
+          <template v-for="item of artistList" :key="item.id">
+            <span class="artist-item" :title="item.name">{{item.name}}</span>
+          </template>
+        </div>
       </div>
     </div>
     <div class="middle">
       <ul class="btn-select">
         <li class="btn-item">
-          <div class="bofang-type" :style="{display: showBofangType ? 'block' : 'none'}"><span>顺序播放</span></div>
-          <i class="iconfont iconbaocunshunxu icon turn-red" @click="changeBofangType"></i>
+          <div class="bofang-type" :style="{display: showBofangType ? 'block' : 'none'}"><span>{{listenTypeTitle}}</span></div>
+          <i
+            class="iconfont turn-red"
+            :class="[listenTypeClass]"
+            :title="listenTypeTitle"
+            @click="changeBofangType"
+          ></i>
         </li>
         <li class="btn-item">
           <i class="iconfont iconshangyishoushangyige turn-red" @click="preSong"></i>
         </li>
         <li class="btn-item">
           <div class="bofang" @click="clickBofang">
-            <i class="iconfont iconicon_bofang icon-item"></i>
+            <i class="iconfont icon-item" :class="{iconicon_bofang: playing, icon65zanting: !playing}"></i>
           </div>
         </li>
         <li class="btn-item">
@@ -58,7 +70,7 @@
 import { player } from '../../store/modules/palyer'
 import ProgressBar from '@/components/progressBar/index.vue'
 import { transformTime } from '@/utils/util'
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 
 export default {
   name: 'miniPlayer',
@@ -83,6 +95,29 @@ export default {
   setup (props, context) {
     const startTimeStr = computed(() => transformTime(props.startTime))
     const endTimeStr = computed(() => transformTime(props.endTime))
+    const songName = computed(() => player.songDetails.name)
+    const artistList = computed(() => player.songDetails.artistsList)
+    const aliasStr = computed(() => player.songDetails.aliasStr)
+    const picUrl = computed(() => player.songDetails.albumPicUrl)
+    const playing = computed(() => player.playing)
+    const selectListenType = computed(() => player.selectListenType)
+    const listenTypeTitle = computed(() => {
+      switch (player.selectListenType) {
+        case 'order': return '顺序播放'
+        case 'random': return '随机播放'
+        case 'single': return '单曲循环'
+        default: return '顺序播放'
+      }
+    })
+    const listenTypeClass = computed(() => {
+      switch (player.selectListenType) {
+        case 'order': return 'iconbaocunshunxu'
+        case 'random': return 'iconsuijibofang01'
+        case 'single': return 'iconhanhan-01-01'
+        default: return 'iconbaocunshunxu'
+      }
+    })
+    const listenTypeList = computed(() => player.listenTypeList)
     const showBofangType = ref<boolean>(false)
     const changeVolume = (percentage) => {
       context.emit('changeVolume', percentage)
@@ -103,6 +138,12 @@ export default {
     }
 
     const changeBofangType = () => {
+      const index = listenTypeList.value.indexOf(selectListenType.value)
+      if (index >= listenTypeList.value.length - 1) {
+        player.changeListenType(0)
+      } else {
+        player.changeListenType(index + 1)
+      }
       showBofangType.value = true
       setTimeout(() => {
         showBofangType.value = false
@@ -112,6 +153,15 @@ export default {
       startTimeStr,
       endTimeStr,
       showBofangType,
+      songName,
+      artistList,
+      aliasStr,
+      picUrl,
+      playing,
+      listenTypeList,
+      selectListenType,
+      listenTypeTitle,
+      listenTypeClass,
       changeVolume,
       changeProgress,
       clickBofang,
@@ -160,6 +210,7 @@ export default {
         height: 36px;
         top: 4px;
         left: 4px;
+        z-index: 5;
         font-size: 36px;
         color: #676767;
         transform: scale(0);
@@ -184,16 +235,24 @@ export default {
       .song-name {
         font-size: 16px;
         display: inline-block;
-        max-width: 100px;
+        max-width: 150px;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
         margin-bottom: 10px;
         cursor: pointer;
+
+        .song-name-alias {
+          color: #989898;
+        }
       }
       .artist-name {
         font-size: 12px;
-        cursor: pointer;
+
+        .artist-item {
+          padding-right: 10px;
+          cursor: pointer;
+        }
       }
     }
   }
@@ -206,7 +265,7 @@ export default {
 
     .btn-select {
       display: flex;
-      height: 40px;
+      height: 36px;
       flex-direction: row;
       justify-content: center;
       margin-bottom: 2px;
