@@ -1,5 +1,5 @@
 import { getRequest } from '@/api/interceptor'
-import { transformSongDetail } from './translate'
+import { transformSongDetail, transformSongLyric } from './translate'
 
 const REQUEST_URL = {
   songDetail: '/song/detail',
@@ -13,7 +13,7 @@ export function getSongDetail (ids) {
 }
 
 export function getSongLyric (id) {
-  return getRequest(REQUEST_URL.songLyric, { id })
+  return getRequest(REQUEST_URL.songLyric, { id }).then(transformSongLyric)
 }
 
 export function getSongComment (id) {

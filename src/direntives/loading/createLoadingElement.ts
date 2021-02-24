@@ -44,6 +44,7 @@ function createLoadingVNode (visible: boolean) {
   }
   // 编译模板成虚拟dom
   vm = createVNode(loadingComponent)
+  // 虚拟dom渲染成dom元素
   render(vm, document.createElement('div'))
   return {
     isShow,

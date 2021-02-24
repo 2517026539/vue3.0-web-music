@@ -98,6 +98,7 @@ export default defineComponent({
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
+  z-index: 2;
 }
 
 .right {
@@ -109,6 +110,7 @@ export default defineComponent({
   padding-left: 30px;
   background-color: #fff;
   overflow: scroll;
+  z-index: 2;
 }
 
 .cover {

@@ -1,8 +1,9 @@
 import { getModule, Action, Mutation, VuexModule, Module } from 'vuex-module-decorators'
 import { _getSongLists, _getSongListIndex, _setSongLists, _getVolume, _setVolume, _getListenType, _setListenType } from '@/utils/stroage'
-import { getSongDetail } from '@/api/player'
+import { getSongDetail, getSongLyric } from '@/api/player'
 import store from './../index'
 
+const GET_SONG_LYRICLIST = 'getSongLyricList'
 const GET_SONG_DETAILS = 'getSongDetails'
 const CHANGE_SONGLIST = 'changeSonglist'
 const CHANGE_VOLUME = 'changeVolume'
@@ -13,6 +14,8 @@ const CHANGE_SONGDETAIL = 'changeSongDetail'
 const CHANGE_LISTENTYPE = 'changeListenType'
 const RANDOM_PLAY = 'randomPlay'
 const SELECT_DANQU = 'selectDanqu'
+const SELECT_LYRIC = 'selectLyric'
+const CHANGE_SONG_LYRICLIST = 'changeSongLyricList'
 
 /* enum ListenType {
   order,
@@ -29,6 +32,10 @@ class Player extends VuexModule {
   public playing = false
   public listenTypeList = ['order', 'random', 'single']
   public selectListenType = _getListenType()
+  public noLyric = false
+  public transformLyricList = null
+  public selectLyricTime = 0
+  public lyricList = null
   public songDetails = {
     id: 0,
     name: '',
@@ -36,7 +43,8 @@ class Player extends VuexModule {
     aliasStr: '',
     albumId: 0,
     albumName: '',
-    albumPicUrl: ''
+    albumPicUrl: '',
+    mv: ''
   }
 
   get isShowPlayer (): boolean {
@@ -69,6 +77,7 @@ class Player extends VuexModule {
     } else {
       this.currentIndex = this.currentIndex + 1
     }
+    _setSongLists(this.currentSongLists[this.currentIndex as number], this.currentSongLists[this.currentIndex as number])
     this.playing = true
   }
 
@@ -79,6 +88,7 @@ class Player extends VuexModule {
     } else {
       this.currentIndex = this.currentIndex - 1
     }
+    _setSongLists(this.currentSongLists[this.currentIndex as number], this.currentSongLists[this.currentIndex as number])
     this.playing = true
   }
 
@@ -102,6 +112,7 @@ class Player extends VuexModule {
   [RANDOM_PLAY] () {
     const randomIndex = Math.floor(Math.random() * this.currentSongLists.length)
     this.currentIndex = randomIndex
+    _setSongLists(this.currentSongLists[this.currentIndex as number], this.currentSongLists[this.currentIndex as number])
   }
 
   @Mutation
@@ -112,10 +123,50 @@ class Player extends VuexModule {
     this.playing = true
   }
 
+  @Mutation
+  [SELECT_LYRIC] (time: number) {
+    if (!this.noLyric) {
+      let currentSelectLyricTime = 0
+      for (const key of this.lyricList.keys()) {
+        if (key === '') {
+          return
+        } else {
+          if (key <= time) {
+            currentSelectLyricTime = key
+          } else {
+            break
+          }
+        }
+      }
+      this.selectLyricTime = currentSelectLyricTime
+    } else {
+      this.selectLyricTime = 0
+    }
+  }
+
+  @Mutation
+  [CHANGE_SONG_LYRICLIST] ({ lyricList, tLyricList }) {
+    if (lyricList === '') {
+      this.noLyric = true
+      this.lyricList = null
+      this.transformLyricList = null
+    } else {
+      this.noLyric = false
+      this.lyricList = lyricList
+      this.transformLyricList = tLyricList
+    }
+  }
+
   @Action
-  public async [GET_SONG_DETAILS] (ids) {
+  public async [GET_SONG_DETAILS] (ids: number) {
     const songDetail = await getSongDetail(ids)
     this.context.commit('changeSongDetail', { songDetail })
+  }
+
+  @Action async [GET_SONG_LYRICLIST] (item) {
+    const { lyricList, tLyricList } = await getSongLyric(item.ids)
+    this.context.commit('changeSongLyricList', { lyricList, tLyricList })
+    this.context.commit('selectLyric', item.time)
   }
 }
 

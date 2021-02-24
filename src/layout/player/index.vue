@@ -1,10 +1,12 @@
 <template>
+  <DetailPlayer :isShow="isShowDetailPlayer"/>
   <MiniPlayer
     v-if="isShowPlayer"
     :percentage = 'percentage'
     :startTime = 'startTime'
     :endTime = 'endTime'
     :volume="volume"
+    @showDetailPlayer="showDetailPlayer"
     @switchMusic='switchMusic'
     @changeProgress="changeProgress"
     @changeVolume="changeVolume"
@@ -20,12 +22,14 @@
 
 <script lang="ts">
 import { player } from '@/store/modules/palyer'
+import DetailPlayer from '@/layout/player/detailPlayer.vue'
 import MiniPlayer from './miniPlayer.vue'
 import { computed, ref, watch, nextTick, onMounted, reactive, toRefs } from 'vue'
 
 export default {
   name: 'index',
   components: {
+    DetailPlayer,
     MiniPlayer
   },
   setup () {
@@ -33,6 +37,7 @@ export default {
     const isShowPlayer = computed(() => player.isShowPlayer)
     const playing = computed(() => player.playing)
     const volume = computed(() => player.volume)
+    const isShowDetailPlayer = ref<boolean>(true)
     const playerData = reactive({
       startTime: 0,
       endTime: 0,
@@ -47,6 +52,7 @@ export default {
       audioRef.value.currentTime = startTime
       playerData.startTime = startTime
       playerData.percentage = startTime / playerData.endTime
+      player.selectLyric(playerData.startTime)
     }
 
     const changeVolume = (percentage) => {
@@ -73,6 +79,7 @@ export default {
           break
         case 'single':
           audioRef.value.play()
+          player.selectLyric(playerData.startTime)
           break
         default:
           player.nextSong()
@@ -92,7 +99,12 @@ export default {
       if (playing.value) {
         playerData.startTime = audioRef.value.currentTime
         playerData.percentage = playerData.startTime / playerData.endTime
+        player.selectLyric(playerData.startTime)
       }
+    }
+
+    const showDetailPlayer = () => {
+      isShowDetailPlayer.value = !isShowDetailPlayer.value
     }
     // oldValue 不能使用解构
     watch(() => [player.currentSongLists, player.currentIndex, player.playing], ([songLists, index, playing], oldValue) => {
@@ -105,6 +117,7 @@ export default {
               audioRef.value.currentTime = playerData.startTime
             } else {
               player.getSongDetails(songLists[index as number])
+              player.getSongLyricList({ ids: songLists[index as number], time: audioRef.value.currentTime })
             }
             playerData.startTime = audioRef.value.currentTime
             audioRef.value.volume = volume.value
@@ -124,6 +137,7 @@ export default {
       audioRef,
       isShowPlayer,
       volume,
+      isShowDetailPlayer,
       switchMusic,
       audioEnd,
       audioError,
@@ -131,6 +145,7 @@ export default {
       changeProgress,
       changeVolume,
       getDuration,
+      showDetailPlayer,
       ...toRefs(playerData)
     }
   }

@@ -43,3 +43,34 @@ export const transformTime = (time:number):string => {
   const second:string = Math.floor((time - Math.floor(time / 60) * 60)).toString().padStart(2, '0')
   return minute + ':' + second
 }
+
+/* 字符串转化时间 */
+export const strTransformTime = (time: string): number => {
+  // 00:00.000
+  const minute = Number(time.slice(0, 2))
+  const second = Number(time.slice(3))
+  const allTime = minute * 60 + second
+  return allTime
+}
+
+/* 分割歌词字符串 */
+export const splitLyric = (lyric) => {
+  const jsonStr = JSON.stringify(lyric)
+  const str = jsonStr.slice(1, jsonStr.length - 1)
+  const arr = str.split('\\n').map(item => item.replace(/\\/g, ''))
+  const mapList = new Map()
+  arr.forEach(item => {
+    if (item.match(/^\[[0-9]{2}:[0-9]{2}\.[0-9]{3}\]/)) {
+      const firstNum:number = strTransformTime(item.slice(1, 10))
+      const secondStr:string = item.slice(11) ? item.slice(11) : ''
+      mapList.set(firstNum, secondStr)
+    } else if (item.match(/^\[[0-9]{2}:[0-9]{2}\.[0-9]{2}\]/)) {
+      const firstNum:number = strTransformTime(item.slice(1, 9))
+      const secondStr:string = item.slice(10) ? item.slice(10) : ''
+      mapList.set(firstNum, secondStr)
+    } else {
+      mapList.set('', '')
+    }
+  })
+  return mapList
+}

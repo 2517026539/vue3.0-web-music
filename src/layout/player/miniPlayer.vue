@@ -1,7 +1,7 @@
 <template>
   <div class="mini-player">
     <div class="left">
-      <div class="song-img">
+      <div class="song-img" @click="() => $emit('showDetailPlayer')">
         <i class="iconfont iconiconset0441"></i>
         <img :src="picUrl" alt="">
       </div>
@@ -91,7 +91,7 @@ export default {
       type: Number
     }
   },
-  emits: ['changeProgress', 'switchMusic', 'changeVolume'],
+  emits: ['changeProgress', 'switchMusic', 'changeVolume', 'showDetailPlayer'],
   setup (props, context) {
     const startTimeStr = computed(() => transformTime(props.startTime))
     const endTimeStr = computed(() => transformTime(props.endTime))
@@ -183,6 +183,7 @@ export default {
   align-items: center;
   flex-direction: row;
   flex-wrap: nowrap;
+  z-index: 6;
 
   .left {
     flex: 0 0 25%;
@@ -192,25 +193,31 @@ export default {
 
     .song-img {
       position: relative;
+      flex: 0 0 44px;
+      height: 44px;
+      border-radius: 5px;
+      cursor: pointer;
 
       >img {
-        width: 44px;
-        height: 44px;
+        width: 100%;
+        height: 100%;
         border-radius: 5px;
-        cursor: pointer;
+
       }
 
       >i {
         position: absolute;
-        width: 36px;
-        height: 36px;
-        top: 4px;
-        left: 4px;
+        width: 100%;
+        height: 100%;
+        line-height: 44px;
         z-index: 5;
         font-size: 36px;
-        color: #676767;
+        text-align: center;
+        background: rgba(7, 17, 27, 0.5);
+        color: #989898;
+        border-radius: 5px;
         transform: scale(0);
-        animation: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
       }
 
       &:hover {
