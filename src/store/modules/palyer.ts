@@ -1,10 +1,11 @@
 import { getModule, Action, Mutation, VuexModule, Module } from 'vuex-module-decorators'
 import { _getSongLists, _getSongListIndex, _setSongLists, _getVolume, _setVolume, _getListenType, _setListenType } from '@/utils/stroage'
-import { getSongDetail, getSongLyric } from '@/api/player'
+import { getSongDetail, getSongLyric, getSongComment } from '@/api/player'
 import store from './../index'
 
 const GET_SONG_LYRICLIST = 'getSongLyricList'
 const GET_SONG_DETAILS = 'getSongDetails'
+const GET_SONG_COMMENT = 'getSongComment'
 const CHANGE_SONGLIST = 'changeSonglist'
 const CHANGE_VOLUME = 'changeVolume'
 const CHANGE_PLAYING = 'changePlaying'
@@ -16,12 +17,6 @@ const RANDOM_PLAY = 'randomPlay'
 const SELECT_DANQU = 'selectDanqu'
 const SELECT_LYRIC = 'selectLyric'
 const CHANGE_SONG_LYRICLIST = 'changeSongLyricList'
-
-/* enum ListenType {
-  order,
-  random,
-  single
-} */
 
 @Module({ dynamic: true, namespaced: true, name: 'player', store })
 
@@ -36,6 +31,7 @@ class Player extends VuexModule {
   public transformLyricList = null
   public selectLyricTime = 0
   public lyricList = null
+  public songComments = null
   public songDetails = {
     id: 0,
     name: '',
@@ -100,7 +96,7 @@ class Player extends VuexModule {
 
   @Mutation
   [CHANGE_LISTENTYPE] (index) {
-    if (index < this.selectListenType.length - 1) {
+    if (index < this.listenTypeList.length - 1) {
       this.selectListenType = this.listenTypeList[index + 1]
     } else {
       this.selectListenType = this.listenTypeList[0]
@@ -163,10 +159,17 @@ class Player extends VuexModule {
     this.context.commit('changeSongDetail', { songDetail })
   }
 
-  @Action async [GET_SONG_LYRICLIST] (item) {
+  @Action
+  public async [GET_SONG_LYRICLIST] (item) {
     const { lyricList, tLyricList } = await getSongLyric(item.ids)
     this.context.commit('changeSongLyricList', { lyricList, tLyricList })
     this.context.commit('selectLyric', item.time)
+  }
+
+  @Action
+  public async [GET_SONG_COMMENT] (id) {
+    const comments = await getSongComment(id)
+    this.songComments = comments
   }
 }
 

@@ -6,6 +6,7 @@
     :startTime = 'startTime'
     :endTime = 'endTime'
     :volume="volume"
+    :isShowDetailPlayer = 'isShowDetailPlayer'
     @showDetailPlayer="showDetailPlayer"
     @switchMusic='switchMusic'
     @changeProgress="changeProgress"
@@ -113,11 +114,13 @@ export default {
           const id = songLists[index as number]
           try {
             audioRef.value.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`
+            audioRef.value.pause()
             if (oldValue && oldValue[1] === index && oldValue[0] === songLists) {
               audioRef.value.currentTime = playerData.startTime
             } else {
               player.getSongDetails(songLists[index as number])
               player.getSongLyricList({ ids: songLists[index as number], time: audioRef.value.currentTime })
+              player.getSongComment(songLists[index as number])
             }
             playerData.startTime = audioRef.value.currentTime
             audioRef.value.volume = volume.value

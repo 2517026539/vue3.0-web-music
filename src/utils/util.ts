@@ -46,7 +46,7 @@ export const transformTime = (time:number):string => {
 
 /* 字符串转化时间 */
 export const strTransformTime = (time: string): number => {
-  // 00:00.000
+  // 00:00.000 或者 00:00.00
   const minute = Number(time.slice(0, 2))
   const second = Number(time.slice(3))
   const allTime = minute * 60 + second
@@ -73,4 +73,39 @@ export const splitLyric = (lyric) => {
     }
   })
   return mapList
+}
+
+/* 时间转字符串 */
+export const timeTransformStr = (time: number):string => {
+  const nowTime = new Date()
+  const pastTime = new Date(time)
+  const nowYear = nowTime.getFullYear()
+  const nowHours = nowTime.getHours()
+  const nowDate = nowTime.getDate()
+  const pastYear = pastTime.getFullYear()
+  const pastMonth = pastTime.getMonth() + 1
+  const pastDate = pastTime.getDate()
+  const pastHours = pastTime.getHours()
+  const pastMinutes = pastTime.getMinutes()
+  // 获取时间差(/分)
+  const timeDiff = (nowTime.getTime() - time) / 1000 / 60
+  if (nowYear !== pastYear) {
+    return `${pastYear}年${pastMonth}月${pastDate}日 ${pastHours.toString().padStart(2, '0')}:${pastMinutes.toString().padStart(2, '0')}`
+  } else if (nowDate !== pastDate) {
+    if (nowDate - pastDate !== 1) {
+      return `${pastMonth}月${pastDate}日 ${pastHours.toString().padStart(2, '0')}:${pastMinutes.toString().padStart(2, '0')}`
+    } else {
+      return `昨天 ${pastHours.toString().padStart(2, '0')}:${pastMinutes.toString().padStart(2, '0')}`
+    }
+  } else {
+    if (nowHours !== pastHours) {
+      return `${pastHours.toString().padStart(2, '0')}:${pastMinutes.toString().padStart(2, '0')}`
+    } else {
+      if (timeDiff < 1) {
+        return '刚刚'
+      } else {
+        return `${Math.floor(timeDiff)}分钟前`
+      }
+    }
+  }
 }

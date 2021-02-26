@@ -6,6 +6,76 @@
   "description": "vue3.0 web music",
   "glyphs": [
     {
+      "icon_id": "15102888",
+      "name": "右",
+      "font_class": "you",
+      "unicode": "e704",
+      "unicode_decimal": 59140
+    },
+    {
+      "icon_id": "15523735",
+      "name": "左",
+      "font_class": "zuo",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "483761",
+      "name": "笔",
+      "font_class": "bi",
+      "unicode": "e66c",
+      "unicode_decimal": 58988
+    },
+    {
+      "icon_id": "2687818",
+      "name": "点赞",
+      "font_class": "zan1",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "8175187",
+      "name": "笑脸",
+      "font_class": "xiaolian-copy",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "10679839",
+      "name": "艾特",
+      "font_class": "aite",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "13182117",
+      "name": "收缩",
+      "font_class": "jianyishupc-icon_shousuo",
+      "unicode": "e687",
+      "unicode_decimal": 59015
+    },
+    {
+      "icon_id": "14976971",
+      "name": "评论",
+      "font_class": "pinglun",
+      "unicode": "e6b6",
+      "unicode_decimal": 59062
+    },
+    {
+      "icon_id": "18028251",
+      "name": "记录",
+      "font_class": "jilu",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "9185062",
+      "name": "收缩",
+      "font_class": "shousuo",
+      "unicode": "e75b",
+      "unicode_decimal": 59227
+    },
+    {
       "icon_id": "162016",
       "name": "音量-",
       "font_class": "volume",

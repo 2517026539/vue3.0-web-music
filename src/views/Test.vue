@@ -1,12 +1,5 @@
 <template>
-  <div>
-    <img src="@/assets/images/stylus.png" alt="#">
-    <ul>
-      <li v-for="([key, value], index) of arr" :key="index">
-        {{key}} : {{ value}}
-      </li>
-    </ul>
-  </div>
+  <i class="iconfont iconshousuo"></i>
 </template>
 
 <script lang="ts">

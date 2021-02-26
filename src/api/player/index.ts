@@ -1,11 +1,12 @@
 import { getRequest } from '@/api/interceptor'
-import { transformSongDetail, transformSongLyric } from './translate'
+import { transformSongDetail, transformSongLyric, transformComment, transformParentComment } from './translate'
 
 const REQUEST_URL = {
   songDetail: '/song/detail',
   songLyric: '/lyric',
   songComment: '/comment/music',
-  simiSong: '/simi/song'
+  simiSong: '/simi/song',
+  parentComment: '/comment/floor'
 }
 
 export function getSongDetail (ids) {
@@ -17,7 +18,11 @@ export function getSongLyric (id) {
 }
 
 export function getSongComment (id) {
-  return getRequest(REQUEST_URL.songComment, { id })
+  return getRequest(REQUEST_URL.songComment, { id }).then(transformComment)
+}
+
+export function getParentComment (parentCommentId, id, type) {
+  return getRequest(REQUEST_URL.parentComment, { parentCommentId, id, type, limit: 1 }).then(transformParentComment)
 }
 
 export function getSimiSong (id) {

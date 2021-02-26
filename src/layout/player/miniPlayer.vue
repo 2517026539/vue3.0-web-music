@@ -2,7 +2,7 @@
   <div class="mini-player">
     <div class="left">
       <div class="song-img" @click="() => $emit('showDetailPlayer')">
-        <i class="iconfont iconiconset0441"></i>
+        <i class="iconfont" :class="{ iconiconset0441: !isShowDetailPlayer, iconshousuo: isShowDetailPlayer }"></i>
         <img :src="picUrl" alt="">
       </div>
       <div class="name">
@@ -89,6 +89,9 @@ export default {
     },
     volume: {
       type: Number
+    },
+    isShowDetailPlayer: {
+      type: Boolean
     }
   },
   emits: ['changeProgress', 'switchMusic', 'changeVolume', 'showDetailPlayer'],
@@ -119,6 +122,7 @@ export default {
     })
     const listenTypeList = computed(() => player.listenTypeList)
     const showBofangType = ref<boolean>(false)
+    const showBofangSetTime = ref(null)
     const changeVolume = (percentage) => {
       context.emit('changeVolume', percentage)
     }
@@ -138,10 +142,13 @@ export default {
     }
 
     const changeBofangType = () => {
+      if (showBofangSetTime.value) {
+        clearTimeout(showBofangSetTime.value)
+      }
       const index = listenTypeList.value.indexOf(selectListenType.value)
       player.changeListenType(index)
       showBofangType.value = true
-      setTimeout(() => {
+      showBofangSetTime.value = setTimeout(() => {
         showBofangType.value = false
       }, 1000)
     }
@@ -218,6 +225,10 @@ export default {
         border-radius: 5px;
         transform: scale(0);
         transition: all .2s ease-in-out;
+      }
+
+      .iconshousuo {
+        font-size: 30px;
       }
 
       &:hover {

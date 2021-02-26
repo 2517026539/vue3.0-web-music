@@ -74,7 +74,19 @@
           </div>
         </div>
       </div>
-      <div class="player-footer"></div>
+      <div class="player-footer">
+        <div class="player-footer-left">
+          <Comment />
+          <Page
+            :total="total"
+            :limit="limit"
+            :offset="offset"
+            @changeOffset="changeOffset"
+          />
+        </div>
+        <div class="player-footer-right">
+        </div>
+      </div>
       <div class="float-block"></div>
     </div>
   </transition>
@@ -82,6 +94,8 @@
 
 <script lang="ts">
 import animationPlayer from '@/hooks/player/animationDetailPlayer'
+import Comment from '@/components/comment/index.vue'
+import Page from '@/components/page/index.vue'
 import { player } from '@/store/modules/palyer'
 import { ref, computed, nextTick, onMounted, watch } from 'vue'
 export default {
@@ -90,6 +104,10 @@ export default {
     isShow: {
       type: Boolean
     }
+  },
+  components: {
+    Comment,
+    Page
   },
   setup () {
     const { enter, afterEnter, leave, afterLeave } = animationPlayer()
@@ -102,27 +120,35 @@ export default {
     const transformLyricList = computed(() => player.transformLyricList)
     const lyricItemRef = ref<HTMLElement | null>(null)
     const activeLyricRef = ref<HTMLElement | null>(null)
+    const total = ref<number>(500)
+    const limit = ref<number>(5)
+    const offset = ref<number>(0)
+    const changeOffset = (num: number) => {
+      offset.value = num
+    }
     watch(() => player.selectLyricTime, (value) => {
       if (noLyric.value) {
         return
       }
       nextTick(() => {
-        const activeRef: HTMLElement = lyricItemRef.value.getElementsByClassName('song-lyric-item').item(0).getElementsByClassName('lyric-active').item(0) as HTMLElement
-        const songLyricItemRef: HTMLElement = lyricItemRef.value.getElementsByClassName('song-lyric-item').item(0) as HTMLElement
-        // 歌词区域父元素的height
-        const lyricItemHeight = lyricItemRef.value.offsetHeight
-        // 歌词区域滚动的高度
-        const songLyricItemScrollHeight = lyricItemRef.value.scrollTop
-        // 歌词区域实际height
-        const songLyricItemHeight = songLyricItemRef.offsetHeight
-        // 当前选中歌词块距离歌词区域顶部的距离top
-        const activeLyricTop = activeRef.offsetTop
-        if (activeLyricTop <= lyricItemHeight / 2) {
-          lyricItemRef.value.scrollTop = 0
-        } else if (songLyricItemHeight - activeLyricTop <= lyricItemHeight / 2) {
-          lyricItemRef.value.scrollTop = songLyricItemHeight - lyricItemHeight
-        } else {
-          lyricItemRef.value.scrollTop = activeLyricTop - lyricItemHeight / 2
+        if (lyricItemRef.value) {
+          const activeRef: HTMLElement = lyricItemRef.value.getElementsByClassName('song-lyric-item').item(0).getElementsByClassName('lyric-active').item(0) as HTMLElement
+          const songLyricItemRef: HTMLElement = lyricItemRef.value.getElementsByClassName('song-lyric-item').item(0) as HTMLElement
+          // 歌词区域父元素的height
+          const lyricItemHeight = lyricItemRef.value.offsetHeight
+          // 歌词区域滚动的高度
+          const songLyricItemScrollHeight = lyricItemRef.value.scrollTop
+          // 歌词区域实际height
+          const songLyricItemHeight = songLyricItemRef.offsetHeight
+          // 当前选中歌词块距离歌词区域顶部的距离top
+          const activeLyricTop = activeRef.offsetTop
+          if (activeLyricTop <= lyricItemHeight / 2) {
+            lyricItemRef.value.scrollTop = 0
+          } else if (songLyricItemHeight - activeLyricTop <= lyricItemHeight / 2) {
+            lyricItemRef.value.scrollTop = songLyricItemHeight - lyricItemHeight
+          } else {
+            lyricItemRef.value.scrollTop = activeLyricTop - lyricItemHeight / 2
+          }
         }
       })
     })
@@ -136,10 +162,14 @@ export default {
       transformLyricList,
       selectLyricTime,
       playing,
+      offset,
+      limit,
+      total,
       enter,
       afterEnter,
       leave,
-      afterLeave
+      afterLeave,
+      changeOffset
     }
   }
 }
@@ -381,6 +411,22 @@ export default {
           color: #666666;
         }
       }
+    }
+  }
+
+  .player-footer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+
+    .player-footer-left {
+      flex: 0 0 60%;
+      box-sizing: border-box;
+    }
+
+    .player-footer-right {
+      flex: 0 0 40%;
+      box-sizing: border-box;
     }
   }
 }

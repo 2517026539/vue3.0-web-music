@@ -12,31 +12,31 @@ export const _getThemeType = (type: string): ThemeType => {
 // 保存歌曲数组：最多保存30首
 export const _setSongLists = (item: number | number[], id: number):void => {
   let songLists: number[] = _getSongLists()
-  if (songLists.length !== 0) {
+  if (songLists.length === 0) {
     if (isArray(item)) {
       songLists = item as number[]
     } else {
-      songLists.push(item as number)
+      songLists.unshift(item as number)
     }
   } else {
     if (isArray(item)) {
-      for (let i = 0; i < (item as number[]).length; i++) {
-        for (let j = 0; j < songLists.length; j++) {
+      for (let i = (item as number[]).length - 1; i >= 0; i--) {
+        for (let j = songLists.length - 1; j >= 0; j--) {
           if (item[i] === songLists[j]) {
             songLists.splice(j, 1)
             break
           }
         }
       }
-      songLists = songLists.concat(item)
+      songLists = (item as number[]).concat(songLists)
     } else {
-      for (let i = 0; i < songLists.length; i++) {
+      for (let i = songLists.length - 1; i >= 0; i--) {
         if (item as number === songLists[i]) {
           songLists.splice(i, 1)
           break
         }
       }
-      songLists.push(item as number)
+      songLists.unshift(item as number)
     }
   }
   if (songLists.length > 30) {

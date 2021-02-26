@@ -1,4 +1,4 @@
-import { splitLyric } from '@/utils/util'
+import { splitLyric, timeTransformStr } from '@/utils/util'
 
 interface SongDetail {
   id: number,
@@ -15,6 +15,19 @@ interface SongDetail {
 interface SongLyric {
   lyricList: any,
   tLyricList: any,
+  [params: string]: any
+}
+
+interface SongComment {
+  commentId: number,
+  content: string,
+  likedCount: number,
+  parentCommentId: number,
+  timeStr: string,
+  avatarUrl: string,
+  nickname: string,
+  userId: number,
+  commentLocationType: number,
   [params: string]: any
 }
 
@@ -53,4 +66,57 @@ export const transformSongLyric = (res) => {
       tLyricList
     } as SongLyric
   }
+}
+
+export const transformComment = async (res) => {
+  if (res) {
+    const { data: { comments, hotComments, total } } = res
+    if (comments && comments.length !== 0) {
+      const commentsList = comments.map(item => {
+        const { commentId, commentLocationType, content, likedCount, parentCommentId, time, user: { avatarUrl, nickname, userId } } = item
+        const timeStr = timeTransformStr(time)
+        return {
+          commentId,
+          commentLocationType,
+          content,
+          likedCount,
+          parentCommentId,
+          timeStr,
+          avatarUrl,
+          nickname,
+          userId
+        } as SongComment
+      })
+      const hotCommentsList = hotComments.map(item => {
+        const { commentId, commentLocationType, content, likedCount, parentCommentId, time, user: { avatarUrl, nickname, userId } } = item
+        const timeStr = timeTransformStr(time)
+        return {
+          commentId,
+          commentLocationType,
+          content,
+          likedCount,
+          parentCommentId,
+          timeStr,
+          avatarUrl,
+          nickname,
+          userId
+        } as SongComment
+      })
+      return {
+        commentsList,
+        hotCommentsList,
+        total
+      }
+    } else {
+      return {
+        commentsList: [],
+        hotCommentsList: [],
+        total: 0
+      }
+    }
+  }
+}
+
+export const transformParentComment = (res) => {
+  console.log(res)
 }
