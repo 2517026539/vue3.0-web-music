@@ -20,6 +20,7 @@ interface SongLyric {
 
 interface SongComment {
   commentId: number,
+  beRepliedObj: any,
   content: string,
   likedCount: number,
   parentCommentId: number,
@@ -29,6 +30,26 @@ interface SongComment {
   userId: number,
   commentLocationType: number,
   [params: string]: any
+}
+
+const getCommentList = (comments) => {
+  return comments.map(item => {
+    const { commentId, beReplied, commentLocationType, content, likedCount, parentCommentId, time, user: { avatarUrl, nickname, userId } } = item
+    const timeStr = timeTransformStr(time)
+    const beRepliedObj = parentCommentId !== 0 ? { beRepliedCommentId: beReplied[0].beRepliedCommentId, userId: beReplied[0].user.userId, nickname: beReplied[0].user.nickname, avatarUrl: beReplied[0].user.avatarUrl, content: beReplied[0].content } : {}
+    return {
+      commentId,
+      beRepliedObj,
+      commentLocationType,
+      content,
+      likedCount,
+      parentCommentId,
+      timeStr,
+      avatarUrl,
+      nickname,
+      userId
+    } as SongComment
+  })
 }
 
 export const transformSongDetail = (res) => {
@@ -72,36 +93,8 @@ export const transformComment = async (res) => {
   if (res) {
     const { data: { comments, hotComments, total } } = res
     if (comments && comments.length !== 0) {
-      const commentsList = comments.map(item => {
-        const { commentId, commentLocationType, content, likedCount, parentCommentId, time, user: { avatarUrl, nickname, userId } } = item
-        const timeStr = timeTransformStr(time)
-        return {
-          commentId,
-          commentLocationType,
-          content,
-          likedCount,
-          parentCommentId,
-          timeStr,
-          avatarUrl,
-          nickname,
-          userId
-        } as SongComment
-      })
-      const hotCommentsList = hotComments.map(item => {
-        const { commentId, commentLocationType, content, likedCount, parentCommentId, time, user: { avatarUrl, nickname, userId } } = item
-        const timeStr = timeTransformStr(time)
-        return {
-          commentId,
-          commentLocationType,
-          content,
-          likedCount,
-          parentCommentId,
-          timeStr,
-          avatarUrl,
-          nickname,
-          userId
-        } as SongComment
-      })
+      const commentsList = getCommentList(comments)
+      const hotCommentsList = getCommentList(hotComments)
       return {
         commentsList,
         hotCommentsList,
@@ -117,6 +110,40 @@ export const transformComment = async (res) => {
   }
 }
 
-export const transformParentComment = (res) => {
-  console.log(res)
+export const transformLastComment = (res) => {
+  if (res) {
+    const { data: { comments } } = res
+    if (comments && comments.length !== 0) {
+      const lastedComments = getCommentList(comments)
+      return {
+        lastedComments
+      }
+    } else {
+      return {
+        lastedComments: []
+      }
+    }
+  }
+}
+
+export const transformSimiSong = (res) => {
+  const { data: { songs } } = res
+  if (songs && songs.length !== 0) {
+    return songs.map(item => {
+      const { album: { picUrl }, alias, id, name, artists } = item
+      const aliasStr = alias.length !== 0 ? '(' + alias.join('/') + ')' : ''
+      const artistsStr = artists.map(item => {
+        return item.name
+      }).join(' ')
+      return {
+        aliasStr,
+        picUrl,
+        id,
+        name,
+        artistsStr
+      }
+    })
+  } else {
+    return []
+  }
 }

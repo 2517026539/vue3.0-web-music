@@ -1,11 +1,14 @@
 import { getModule, Action, Mutation, VuexModule, Module } from 'vuex-module-decorators'
 import { _getSongLists, _getSongListIndex, _setSongLists, _getVolume, _setVolume, _getListenType, _setListenType } from '@/utils/stroage'
-import { getSongDetail, getSongLyric, getSongComment } from '@/api/player'
+import { getSongDetail, getSongLyric, getSongComment, getSongLastedComment, getSimiSong } from '@/api/player'
 import store from './../index'
 
 const GET_SONG_LYRICLIST = 'getSongLyricList'
 const GET_SONG_DETAILS = 'getSongDetails'
 const GET_SONG_COMMENT = 'getSongComment'
+const GET_SONG_LASTEDCOMMENT = 'getSongLastedComment'
+const GET_SIMISONG = 'getSimiSongList'
+
 const CHANGE_SONGLIST = 'changeSonglist'
 const CHANGE_VOLUME = 'changeVolume'
 const CHANGE_PLAYING = 'changePlaying'
@@ -17,6 +20,9 @@ const RANDOM_PLAY = 'randomPlay'
 const SELECT_DANQU = 'selectDanqu'
 const SELECT_LYRIC = 'selectLyric'
 const CHANGE_SONG_LYRICLIST = 'changeSongLyricList'
+const CHANGE_SONG_COMMENT = 'changeSongComment'
+const CHANGE_SONG_LASTEDCOMMENT = 'changeSongLastedComment'
+const CHANGE_SIMISONG = 'changeSimiSong'
 
 @Module({ dynamic: true, namespaced: true, name: 'player', store })
 
@@ -31,7 +37,15 @@ class Player extends VuexModule {
   public transformLyricList = null
   public selectLyricTime = 0
   public lyricList = null
-  public songComments = null
+  // 默认获取评论偏移量
+  public commentOffset = 0
+  // 默认获取评论条数
+  public commentLimit = 20
+  public totals = 0
+  public commentsList = []
+  public hotsCommentsList = []
+  public simiSongList = []
+
   public songDetails = {
     id: 0,
     name: '',
@@ -153,6 +167,27 @@ class Player extends VuexModule {
     }
   }
 
+  @Mutation
+  [CHANGE_SONG_COMMENT] ({ comments, offset, limit }) {
+    this.totals = comments.total
+    this.commentOffset = offset
+    this.commentLimit = limit
+    this.hotsCommentsList = comments.hotCommentsList
+    this.commentsList = comments.commentsList
+  }
+
+  @Mutation
+  [CHANGE_SONG_LASTEDCOMMENT] ({ lastedComments, offset, limit }) {
+    this.commentLimit = limit
+    this.commentsList = lastedComments
+    this.commentOffset = offset
+  }
+
+  @Mutation
+  [CHANGE_SIMISONG] (simiSongData) {
+    this.simiSongList = simiSongData
+  }
+
   @Action
   public async [GET_SONG_DETAILS] (ids: number) {
     const songDetail = await getSongDetail(ids)
@@ -167,9 +202,21 @@ class Player extends VuexModule {
   }
 
   @Action
-  public async [GET_SONG_COMMENT] (id) {
-    const comments = await getSongComment(id)
-    this.songComments = comments
+  public async [GET_SONG_COMMENT] ({ id, offset, limit }) {
+    const comments = await getSongComment({ id, offset, limit })
+    this.context.commit('changeSongComment', { comments, offset, limit })
+  }
+
+  @Action
+  public async [GET_SONG_LASTEDCOMMENT] ({ id, offset, limit }) {
+    const { lastedComments } = await getSongLastedComment({ id, offset, limit })
+    this.context.commit('changeSongLastedComment', { lastedComments, offset, limit })
+  }
+
+  @Action
+  public async [GET_SIMISONG] (id) {
+    const simiSongData = await getSimiSong(id)
+    this.context.commit('changeSimiSong', simiSongData)
   }
 }
 

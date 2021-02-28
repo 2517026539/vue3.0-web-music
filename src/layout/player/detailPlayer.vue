@@ -6,7 +6,7 @@
     @after-leave="afterLeave"
     :css="false"
   >
-    <div class="detail-player" ref="boxRef" v-if="isShow">
+    <div class="detail-player" ref="detailPlayerRef" v-if="isShow">
       <div class="player-header">
         <div class="left">
           <div class="left-stylus">
@@ -76,18 +76,47 @@
       </div>
       <div class="player-footer">
         <div class="player-footer-left">
-          <Comment />
+          <h1 class="title comment-title">评论 <span class="comment-count">(已有1000条评论)</span></h1>
+          <div class="comment-context">
+            <p class="turn-left">
+              <i class="iconfont iconbi"></i>
+              <span class="comment-content-placeholder">发表评论</span>
+            </p>
+            <div class="turn-right">
+              <i class="iconfont iconxiaolian-copy tag"></i>
+              <i class="iconfont iconaite tag"></i>
+            </div>
+          </div>
+          <HotsComment
+            :hotsCommentsList="hotsCommentsList"
+          />
+          <Comment
+            ref="commentRef"
+            :totals="totals"
+            :commentsList="commentsList"
+          />
           <Page
-            :total="total"
+            :totals="totals"
             :limit="limit"
             :offset="offset"
             @changeOffset="changeOffset"
           />
         </div>
         <div class="player-footer-right">
+          <h1 class="simi-title">相似歌曲</h1>
+          <template v-if="simiSongList.length !== 0">
+            <SimiSong
+              v-for="item of simiSongList"
+              :key="item"
+              :simiSongData='item'
+              @changeMusic = 'changeMusic'
+            />
+          </template>
         </div>
       </div>
-      <div class="float-block"></div>
+      <div class="float-block" @click="$emit('closeDetailPlayer')" title="收起音乐详情页">
+        <i class="iconfont iconshousuo"></i>
+      </div>
     </div>
   </transition>
 </template>
@@ -95,9 +124,12 @@
 <script lang="ts">
 import animationPlayer from '@/hooks/player/animationDetailPlayer'
 import Comment from '@/components/comment/index.vue'
+import HotsComment from '@/components/hotsComment/index.vue'
+import SimiSong from '@/layout/player/simiSong.vue'
 import Page from '@/components/page/index.vue'
 import { player } from '@/store/modules/palyer'
 import { ref, computed, nextTick, onMounted, watch } from 'vue'
+
 export default {
   name: 'detailPlayer',
   props: {
@@ -105,13 +137,17 @@ export default {
       type: Boolean
     }
   },
+  emits: ['closeDetailPlayer'],
   components: {
     Comment,
+    HotsComment,
+    SimiSong,
     Page
   },
   setup () {
     const { enter, afterEnter, leave, afterLeave } = animationPlayer()
-    const boxRef = ref<HTMLElement | null>(null)
+    const detailPlayerRef = ref<HTMLElement | null>(null)
+    const commentRef = ref<HTMLElement | null>(null)
     const playing = computed(() => player.playing)
     const songDetails = computed(() => player.songDetails)
     const lyricList = computed(() => player.lyricList)
@@ -120,13 +156,26 @@ export default {
     const transformLyricList = computed(() => player.transformLyricList)
     const lyricItemRef = ref<HTMLElement | null>(null)
     const activeLyricRef = ref<HTMLElement | null>(null)
-    const total = ref<number>(500)
-    const limit = ref<number>(5)
-    const offset = ref<number>(0)
+    const totals = computed(() => player.totals)
+    const limit = computed(() => player.commentLimit)
+    const offset = computed(() => player.commentOffset)
+    const currentIndex = computed(() => player.currentIndex)
+    const currentSongLists = computed(() => player.currentSongLists)
+    const commentsList = computed(() => player.commentsList)
+    const hotsCommentsList = computed(() => player.hotsCommentsList)
+    const simiSongList = computed(() => player.simiSongList)
     const changeOffset = (num: number) => {
-      offset.value = num
+      player.getSongLastedComment({ id: currentSongLists.value[currentIndex.value], offset: num, limit: limit.value })
+      nextTick(() => {
+        // @ts-ignore
+        const commentoffSetTop = commentRef.value.$el.offsetTop
+        detailPlayerRef.value.scrollTop = commentoffSetTop
+      })
     }
-    watch(() => player.selectLyricTime, (value) => {
+    const changeMusic = (id: number) => {
+      player.selectDanqu(id)
+    }
+    watch(() => player.selectLyricTime, () => {
       if (noLyric.value) {
         return
       }
@@ -136,8 +185,6 @@ export default {
           const songLyricItemRef: HTMLElement = lyricItemRef.value.getElementsByClassName('song-lyric-item').item(0) as HTMLElement
           // 歌词区域父元素的height
           const lyricItemHeight = lyricItemRef.value.offsetHeight
-          // 歌词区域滚动的高度
-          const songLyricItemScrollHeight = lyricItemRef.value.scrollTop
           // 歌词区域实际height
           const songLyricItemHeight = songLyricItemRef.offsetHeight
           // 当前选中歌词块距离歌词区域顶部的距离top
@@ -152,8 +199,14 @@ export default {
         }
       })
     })
+    watch([() => player.currentIndex, () => player.currentSongLists], () => {
+      if (detailPlayerRef.value) {
+        detailPlayerRef.value.scrollTop = 0
+      }
+    })
     return {
-      boxRef,
+      detailPlayerRef,
+      commentRef,
       lyricItemRef,
       activeLyricRef,
       songDetails,
@@ -164,12 +217,16 @@ export default {
       playing,
       offset,
       limit,
-      total,
+      totals,
+      commentsList,
+      hotsCommentsList,
+      simiSongList,
       enter,
       afterEnter,
       leave,
       afterLeave,
-      changeOffset
+      changeOffset,
+      changeMusic
     }
   }
 }
@@ -251,7 +308,7 @@ export default {
       }
 
       .left-option {
-        margin-top: 20px;
+        margin-top: 30px;
 
         >ul {
           display: flex;
@@ -283,7 +340,7 @@ export default {
     .right {
       flex: 0 0 50%;
       box-sizing: border-box;
-      padding-top: 10px;
+      padding-top: 30px;
       padding-left: 20px;
       padding-right: 10px;
 
@@ -384,6 +441,7 @@ export default {
 
           .lyric-block {
             margin-bottom: 20px;
+            overflow: hidden;
             font-size: 16px;
             color: #989898;
 
@@ -422,11 +480,86 @@ export default {
     .player-footer-left {
       flex: 0 0 60%;
       box-sizing: border-box;
+
+      .title {
+        color: #000001;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        margin-top: 10px;
+      }
+
+      .comment-title {
+        margin-bottom: 20px;
+
+        .comment-count {
+          color: #d0d0d0;
+          font-size: 12px;
+        }
+      }
+
+      .comment-context {
+        display: flex;
+        flex-direction: row;
+        color: #d0d0d0;
+        border: 1px solid #D0D0D0;
+        border-radius: 4px;
+        width: 100%;
+        height: 80px;
+        box-sizing: border-box;
+        padding: 5px;
+        justify-content: space-between;
+
+        .turn-left {
+          flex: 1;
+          font-size: 14px;
+        }
+
+        .turn-right {
+          overflow: hidden;
+
+          .tag {
+            margin: 0 5px;
+            cursor: pointer;
+            font-size: 18px;
+          }
+        }
+      }
     }
 
     .player-footer-right {
       flex: 0 0 40%;
       box-sizing: border-box;
+      padding-left: 70px;
+      padding-right: 10px;
+
+      .simi-title {
+        color: #000001;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .float-block {
+    position: fixed;
+    top: 80px;
+    right: 13vw;
+    width: 30px;
+    height: 20px;
+    border: 1px solid #d0d0d0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 3px;
+    background-color: #f2f3f4;
+
+    >i {
+      font-size: 16px;
+      color: #313131;
     }
   }
 }

@@ -1,37 +1,59 @@
 <template>
   <div v-if="isKongbai" class="kongbai"></div>
   <ul v-else class="page">
-    <li class="page-item trun-rotate-180" @click="preOffset" :class="{ 'option': turnLeft}">
+    <li
+      class="page-item trun-rotate-180"
+      @click="preOffset"
+      :class="{ 'option': turnLeft}"
+    >
       <i class="iconfont iconyou"></i>
     </li>
-    <li class="page-item" :class="{'page-item-active': offset === 0, 'option': offset !== 0}" @click="changeOffset(0)">
+    <li
+      class="page-item"
+      :class="{'page-item-active': offset === 0, 'option': offset !== 0}"
+      @click="changeOffset(0)"
+    >
       <span>1</span>
     </li>
     <li class="page-item" :class="{ 'page-item-hidden': !left}">
       <span>...</span>
     </li>
-    <li class="page-item" :class="{'page-item-active': offset + 1 === item, 'option': offset + 1 !== item}" v-for="item of arr" :key="item">
-      <span @click="changeOffset(item - 1)">{{item}}</span>
+    <li
+      class="page-item"
+      :class="{'page-item-active': offset + 1 === item, 'option': offset + 1 !== item}"
+      v-for="item of arr"
+      @click="changeOffset(item - 1)"
+      :key="item"
+    >
+      <span>{{item}}</span>
     </li>
     <li class="page-item" :class="{ 'page-item-hidden': !right}">
       <span>...</span>
     </li>
-    <li class="page-item" :class="{'page-item-active': offset === lens - 1, 'option': offset !== lens - 1}" @click="changeOffset(lens - 1)">
+    <li
+      class="page-item"
+      :class="{'page-item-active': offset === lens - 1, 'option': offset !== lens - 1}"
+      @click="changeOffset(lens - 1)"
+    >
       <span>{{lens}}</span>
     </li>
-    <li class="page-item" @click="nextOffset" :class="{'option': turnRight}">
+    <li
+      class="page-item"
+      @click="nextOffset"
+      :class="{'option': turnRight}"
+    >
       <i class="iconfont iconyou"></i>
     </li>
   </ul>
 </template>
 
 <script lang="ts">
-import { ref, watchEffect, computed, nextTick } from 'vue'
+import { ref, watchEffect, computed } from 'vue'
 
 export default {
   name: 'index',
   props: {
-    total: {
+    totals: {
       type: Number,
       default: 0
     },
@@ -50,7 +72,7 @@ export default {
     const turnRight = ref<boolean>(false)
     const left = ref<boolean>(false)
     const right = ref<boolean>(false)
-    const lens = computed(():number => Math.ceil(props.total / props.limit))
+    const lens = computed(():number => Math.ceil(props.totals / props.limit))
     const arr = ref<any[]>([])
     const isKongbai = ref<boolean>(false)
     const changeOffset = (index) => {
@@ -69,7 +91,7 @@ export default {
       }
     }
     watchEffect(() => {
-      const len = Math.ceil(props.total / props.limit)
+      const len = Math.ceil(props.totals / props.limit)
       const offset = props.offset
       arr.value = []
       if (len <= 1) {
@@ -95,6 +117,7 @@ export default {
           turnRight.value = false
         }
       } else {
+        isKongbai.value = false
         if (offset + 1 > 5 && offset + 1 <= len - 5) {
           for (let i = offset - 2; i <= offset + 4; i++) {
             arr.value.push(i)

@@ -1,5 +1,5 @@
 <template>
-  <DetailPlayer :isShow="isShowDetailPlayer"/>
+  <DetailPlayer :isShow="isShowDetailPlayer" @closeDetailPlayer="closeDetailPlayer"/>
   <MiniPlayer
     v-if="isShowPlayer"
     :percentage = 'percentage'
@@ -38,7 +38,11 @@ export default {
     const isShowPlayer = computed(() => player.isShowPlayer)
     const playing = computed(() => player.playing)
     const volume = computed(() => player.volume)
-    const isShowDetailPlayer = ref<boolean>(true)
+    // 默认偏移量
+    const commentOffset = ref<number>(0)
+    // 默认获取评论条数
+    const commentLimit = computed(() => player.commentLimit)
+    const isShowDetailPlayer = ref<boolean>(false)
     const playerData = reactive({
       startTime: 0,
       endTime: 0,
@@ -107,6 +111,10 @@ export default {
     const showDetailPlayer = () => {
       isShowDetailPlayer.value = !isShowDetailPlayer.value
     }
+
+    const closeDetailPlayer = () => {
+      isShowDetailPlayer.value = false
+    }
     // oldValue 不能使用解构
     watch(() => [player.currentSongLists, player.currentIndex, player.playing], ([songLists, index, playing], oldValue) => {
       nextTick(() => {
@@ -114,13 +122,13 @@ export default {
           const id = songLists[index as number]
           try {
             audioRef.value.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`
-            audioRef.value.pause()
             if (oldValue && oldValue[1] === index && oldValue[0] === songLists) {
               audioRef.value.currentTime = playerData.startTime
             } else {
               player.getSongDetails(songLists[index as number])
               player.getSongLyricList({ ids: songLists[index as number], time: audioRef.value.currentTime })
-              player.getSongComment(songLists[index as number])
+              player.getSongComment({ id: songLists[index as number], offset: commentOffset.value, limit: commentLimit.value })
+              player.getSimiSongList(songLists[index as number])
             }
             playerData.startTime = audioRef.value.currentTime
             audioRef.value.volume = volume.value
@@ -149,6 +157,7 @@ export default {
       changeVolume,
       getDuration,
       showDetailPlayer,
+      closeDetailPlayer,
       ...toRefs(playerData)
     }
   }

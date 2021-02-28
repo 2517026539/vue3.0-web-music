@@ -1,9 +1,9 @@
 <template>
-  <div class="comment">
-    <template v-if="commentsList.length !== 0">
-      <h1 class="title">最新评论{{totals}}</h1>
-      <div class="lastest-comment">
-        <div class="lastest-comment-context" v-for="item of commentsList" :key="item">
+  <div class="hots-comment">
+    <template v-if="hotsCommentsList.length !== 0">
+      <h1 class="title wonder-comment-title">精彩评论</h1>
+      <div class="wonder-comment">
+        <div class="wonder-comment-context" v-for="item of hotsCommentsList" :key="item">
           <div class="wonder-comment-context-left">
             <img :src="item.avatarUrl" alt="">
           </div>
@@ -15,7 +15,7 @@
               {{item.content}}
             </p>
             <div class="argued" v-if="item.parentCommentId !== 0">
-              <span class="reviewer-name">{{item.beRepliedObj.nickname}}:</span>
+              <span class="reviewer-name">{{item.beRepliedObj.nickname}}</span>
               {{item.beRepliedObj.content}}
             </div>
             <div class="comment-fun">
@@ -49,6 +49,9 @@
             </div>
           </div>
         </div>
+        <div class="wonder-comment-footer">
+          <span class="more-comment">更多精彩评论></span>
+        </div>
       </div>
     </template>
   </div>
@@ -58,11 +61,7 @@
 export default {
   name: 'index',
   props: {
-    totals: {
-      type: Number,
-      default: 0
-    },
-    commentsList: {
+    hotsCommentsList: {
       type: Array
     }
   }
@@ -70,7 +69,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.comment {
+.hots-comment {
   padding-top: 20px;
 
   .title {
@@ -81,11 +80,31 @@ export default {
     margin-top: 10px;
   }
 
-  .lastest-comment {
-    padding-top: 10px;
+  .wonder-comment {
 
-    .lastest-comment-context {
+    .wonder-comment-context {
       @extend .comment-style;
+    }
+
+    .wonder-comment-footer {
+      display: flex;
+      align-items: center;
+      height: 50px;
+      padding-bottom: 20px;
+      justify-content: center;
+
+      .more-comment {
+        padding: 5px 10px;
+        font-size: 14px;
+        border-radius: 13px;
+        color: #313131;
+        border: 1px solid #D0D0D0;
+        cursor: pointer;
+
+        &:hover {
+          color: #2b2b2b;
+        }
+      }
     }
   }
 }
