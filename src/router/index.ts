@@ -1,12 +1,12 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
-import component from '*.vue'
 
 const recommend = () => import('@/views/recommend/index.vue')
 const playlists = () => import('@/views/playlists/index.vue')
 const rank = () => import('@/views/rank/index.vue')
 const singer = () => import('@/views/singer/index.vue')
 const lastestMusic = () => import('@/views/lastestMusic/index.vue')
+const video = () => import('@/views/video/index.vue')
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -39,6 +39,14 @@ const routes: Array<RouteRecordRaw> = [
         path: 'lastestmusic',
         name: 'LastestMusic',
         component: lastestMusic
+      },
+      {
+        path: 'video/:id',
+        name: 'video',
+        components: {
+          video: video
+        },
+        meta: { test: '小贤我想你' }
       },
       {
         path: 'testmain',

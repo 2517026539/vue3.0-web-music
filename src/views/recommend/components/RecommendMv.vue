@@ -24,8 +24,8 @@ export default {
       type: Object
     }
   },
-  setup () {
-
+  setup (props) {
+    return {}
   }
 }
 </script>
@@ -33,8 +33,8 @@ export default {
 <style lang="scss" scoped>
 .recommend-mv-content {
   position: relative;
-  border-radius: 5px;
   cursor: pointer;
+  border-radius: 5px;
 
   img {
     width: 100%;
@@ -47,34 +47,35 @@ export default {
     top: 5px;
     right: 8px;
     display: flex;
-    align-items: center;
     font-size: 14px;
     color: #fff;
+    align-items: center;
 
     .bofang {
-      color: #fff;
       font-size: 14px;
+      color: #fff;
     }
   }
 }
 
 .recommend-mv-title {
+  width: 100%;
   height: 45px;
 
   .recommend-mv-name {
-    font-size: 16px;
-    padding-bottom: 4px;
     padding-top: 4px;
+    padding-bottom: 4px;
+    font-size: 16px;
     cursor: pointer;
   }
 
   .artist-name {
     font-size: 14px;
-    color: #666666;
+    color: #666;
     cursor: pointer;
 
     &:hover {
-      color: #333333;
+      color: #333;
     }
   }
 }

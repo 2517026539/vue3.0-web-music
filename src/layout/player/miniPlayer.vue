@@ -181,29 +181,29 @@ export default {
   position: fixed;
   bottom: 0;
   left: 0;
+  z-index: 6;
+  display: flex;
   width: 100%;
   height: $player-height;
-  box-sizing: border-box;
   padding: 0 10px;
   background-color: #fff;
-  display: flex;
+  box-sizing: border-box;
   align-items: center;
   flex-direction: row;
   flex-wrap: nowrap;
-  z-index: 6;
 
   .left {
-    flex: 0 0 25%;
     display: flex;
+    flex: 0 0 25%;
     flex-direction: row;
     align-items: center;
 
     .song-img {
       position: relative;
-      flex: 0 0 44px;
       height: 44px;
-      border-radius: 5px;
       cursor: pointer;
+      border-radius: 5px;
+      flex: 0 0 44px;
 
       >img {
         width: 100%;
@@ -214,14 +214,14 @@ export default {
 
       >i {
         position: absolute;
+        z-index: 5;
         width: 100%;
         height: 100%;
-        line-height: 44px;
-        z-index: 5;
         font-size: 36px;
+        line-height: 44px;
+        color: #989898;
         text-align: center;
         background: rgba(7, 17, 27, 0.5);
-        color: #989898;
         border-radius: 5px;
         transform: scale(0);
         transition: all .2s ease-in-out;
@@ -235,6 +235,7 @@ export default {
         >i {
           transform: scale(1);
         }
+
         >img {
           filter: blur(3px);
         }
@@ -242,24 +243,25 @@ export default {
     }
 
     .name {
-      margin-left: 10px;
       display: flex;
+      margin-left: 10px;
       flex-direction: column;
 
       .song-name {
-        font-size: 16px;
         display: inline-block;
         max-width: 150px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
         margin-bottom: 10px;
+        overflow: hidden;
+        font-size: 16px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         cursor: pointer;
 
         .song-name-alias {
           color: #989898;
         }
       }
+
       .artist-name {
         font-size: 12px;
 
@@ -272,35 +274,35 @@ export default {
   }
 
   .middle {
-    flex: 0 0 50%;
     display: flex;
+    flex: 0 0 50%;
     flex-direction: column;
     align-items: center;
 
     .btn-select {
       display: flex;
       height: 36px;
+      margin-bottom: 2px;
       flex-direction: row;
       justify-content: center;
-      margin-bottom: 2px;
 
       .btn-item {
-        margin: 0 12px;
         position: relative;
-        font-size: 18px;
         display: flex;
+        margin: 0 12px;
+        font-size: 18px;
         align-items: center;
 
         .bofang-type {
           position: absolute;
           top: -20px;
-          display: none;
           left: 50%;
+          display: none;
           padding: 6px 12px;
           font-size: 12px;
-          border-radius: 5px;
           color: #f2f3f4;
           background-color: rgba(77, 77, 79, 0.9);
+          border-radius: 5px;
           transform: translateX(-50%);
           animation: all 0.6s ease-in-out;
 
@@ -310,22 +312,22 @@ export default {
         }
 
         .bofang {
-          background-color: #f5f5f6;
-          height: 36px;
-          width: 36px;
-          border-radius: 50%;
-          color: #000000;
-          cursor: pointer;
           position: relative;
+          width: 36px;
+          height: 36px;
+          color: #000;
+          cursor: pointer;
+          background-color: #f5f5f6;
+          border-radius: 50%;
 
           .icon-item {
             position: absolute;
-            font-size: 20px;
-            width: 20px;
-            height: 20px;
-            line-height: 1;
             top: 8px;
             left: 8px;
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
+            line-height: 1;
           }
 
           &:hover {
@@ -359,15 +361,15 @@ export default {
       }
 
       .progress-bar-middle {
-        margin: 0 10px;
         width: 500px;
+        margin: 0 10px;
       }
     }
   }
 
   .right {
-    flex: 0 0 25%;
     display: flex;
+    flex: 0 0 25%;
     flex-direction: row;
     align-items: center;
 

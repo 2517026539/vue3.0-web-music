@@ -25,7 +25,7 @@
 import { player } from '@/store/modules/palyer'
 import DetailPlayer from '@/layout/player/detailPlayer.vue'
 import MiniPlayer from './miniPlayer.vue'
-import { computed, ref, watch, nextTick, onMounted, reactive, toRefs } from 'vue'
+import { computed, ref, watch, nextTick, onMounted, reactive, toRefs, onUnmounted } from 'vue'
 
 export default {
   name: 'index',
@@ -125,15 +125,15 @@ export default {
             if (oldValue && oldValue[1] === index && oldValue[0] === songLists) {
               audioRef.value.currentTime = playerData.startTime
             } else {
-              player.getSongDetails(songLists[index as number])
-              player.getSongLyricList({ ids: songLists[index as number], time: audioRef.value.currentTime })
-              player.getSongComment({ id: songLists[index as number], offset: commentOffset.value, limit: commentLimit.value })
-              player.getSimiSongList(songLists[index as number])
+              player.getSongDetails(id)
+              player.getSongLyricList({ ids: id, time: audioRef.value.currentTime })
+              player.getSongComment({ id, offset: commentOffset.value, limit: commentLimit.value })
+              player.getSimiSongList(id)
             }
             playerData.startTime = audioRef.value.currentTime
             audioRef.value.volume = volume.value
           } catch (e) {
-            console.log(e)
+            audioError()
           }
         }
         if (playing) {

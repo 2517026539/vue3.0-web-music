@@ -6,6 +6,27 @@
   "description": "vue3.0 web music",
   "glyphs": [
     {
+      "icon_id": "868003",
+      "name": "icon-井",
+      "font_class": "iconjing",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "8300821",
+      "name": "向上",
+      "font_class": "xiangshang",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "8300822",
+      "name": "向下",
+      "font_class": "xiangxia",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
       "icon_id": "15102888",
       "name": "右",
       "font_class": "you",

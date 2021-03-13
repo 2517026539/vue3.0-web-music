@@ -24,7 +24,7 @@
     position: absolute;
     top: 30px;
     left: -20%;
-    z-index: 6;
+    z-index: 8;
     width: 350px;
     min-height: 50px;
     background-color: rgba(255, 255, 255, 1);
@@ -163,29 +163,29 @@
   position: absolute;
   top: 100%;
   left: 20%;
-  z-index: 999;
+  z-index: 8;
   width: 100px;
   padding: 7px 5px;
+  overflow: hidden;
   border-radius: 5px;
   transform: translateY(4px);
-  overflow: hidden;
 
   .theme-title {
-    color: #333333;
-    font-weight: bold;
     padding: 5px 10px 5px 0;
     margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+    text-indent: 3px;
     background-color: #cbcbcb;
     border-radius: 5px;
-    text-indent: 3px;
   }
 
   .themeList {
     display: flex;
+    padding-top: 5px;
+    margin-top: 5px;
     flex-wrap: wrap;
     flex-direction: row;
-    margin-top: 5px;
-    padding-top: 5px;
 
     .themeItem {
       width: 18px;

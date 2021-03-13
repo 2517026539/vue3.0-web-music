@@ -116,9 +116,9 @@ $primary-color: #ec4141;
     animation: loading 1.5s ease-in infinite;
 
     &:nth-child(2) {
+      opacity: .6;
       -webkit-animation-delay: -0.9s;
       animation-delay: -0.9s;
-      opacity: .6;
     }
   }
 }
@@ -127,9 +127,11 @@ $primary-color: #ec4141;
   0% {
     transform: scale(0);
   }
+
   50% {
     transform: scale(1);
   }
+
   100% {
     transform: scale(0);
   }
@@ -139,9 +141,11 @@ $primary-color: #ec4141;
   0% {
     transform: scale(0);
   }
+
   50% {
     transform: scale(1);
   }
+
   100% {
     transform: scale(0);
   }

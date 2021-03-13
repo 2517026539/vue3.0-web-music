@@ -37,7 +37,7 @@
         <div class="right">
           <div class="right-title">
             <span>{{songDetails.name}}</span>
-            <span class="song-tag" v-if="songDetails.mv">MV</span>
+            <span class="song-tag" v-if="songDetails.mv" @click="handleChangeMv">MV</span>
             <span class="song-tag">极高音质</span>
           </div>
           <div class="right-alias" v-if="songDetails.aliasStr">
@@ -76,7 +76,7 @@
       </div>
       <div class="player-footer">
         <div class="player-footer-left">
-          <h1 class="title comment-title">评论 <span class="comment-count">(已有1000条评论)</span></h1>
+          <h1 class="title comment-title">评论 <span class="comment-count">(已有{{totals}}条评论)</span></h1>
           <div class="comment-context">
             <p class="turn-left">
               <i class="iconfont iconbi"></i>
@@ -129,6 +129,7 @@ import SimiSong from '@/layout/player/simiSong.vue'
 import Page from '@/components/page/index.vue'
 import { player } from '@/store/modules/palyer'
 import { ref, computed, nextTick, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'detailPlayer',
@@ -145,6 +146,7 @@ export default {
     Page
   },
   setup () {
+    const router = useRouter()
     const { enter, afterEnter, leave, afterLeave } = animationPlayer()
     const detailPlayerRef = ref<HTMLElement | null>(null)
     const commentRef = ref<HTMLElement | null>(null)
@@ -175,12 +177,15 @@ export default {
     const changeMusic = (id: number) => {
       player.selectDanqu(id)
     }
-    watch(() => player.selectLyricTime, () => {
+    const handleChangeMv = () => {
+      router.push({ name: 'video', params: { id: songDetails.value.mv } })
+    }
+    watch([() => player.selectLyricTime, () => player.lyricList], (value, oldValue) => {
       if (noLyric.value) {
         return
       }
       nextTick(() => {
-        if (lyricItemRef.value) {
+        if (lyricItemRef.value && lyricItemRef.value.getElementsByClassName('song-lyric-item').item(0).getElementsByClassName('lyric-active').item(0)) {
           const activeRef: HTMLElement = lyricItemRef.value.getElementsByClassName('song-lyric-item').item(0).getElementsByClassName('lyric-active').item(0) as HTMLElement
           const songLyricItemRef: HTMLElement = lyricItemRef.value.getElementsByClassName('song-lyric-item').item(0) as HTMLElement
           // 歌词区域父元素的height
@@ -226,7 +231,8 @@ export default {
       leave,
       afterLeave,
       changeOffset,
-      changeMusic
+      changeMusic,
+      handleChangeMv
     }
   }
 }
@@ -237,13 +243,13 @@ export default {
   position: fixed;
   top: $header-height;
   bottom: $player-height;
-  width: 100%;
   z-index: 5;
-  background-color: #fff;
-  box-sizing: border-box;
+  width: 100%;
   padding: 0 14vw;
   overflow-x: hidden;
   overflow-y: scroll;
+  background-color: #fff;
+  box-sizing: border-box;
 
   .player-header {
     display: flex;
@@ -253,22 +259,22 @@ export default {
       flex: 0 0 50%;
 
       .left-stylus {
+        position: relative;
         width: 100%;
         height: 60px;
-        position: relative;
 
         .stylus {
           position: absolute;
           top: -5px;
           left: 50%;
+          z-index: 2;
           width: 180px;
           height: 100px;
           background-image: url('../../assets/images/stylus.png');
           background-repeat: no-repeat;
           background-size: 80% 80%;
-          transform-origin: 0 0;
           transition: all 0.3s ease-in;
-          z-index: 2
+          transform-origin: 0 0;
         }
 
         .stylus-active {
@@ -280,25 +286,25 @@ export default {
         width: 100%;
 
         .cd {
+          display: flex;
+          width: 300px;
+          height: 300px;
           margin: 0 auto;
+          background-color: #989898;
           background-image: url("../../assets/images/cover-2.png");
           background-position: -1px -5px;
           background-repeat: no-repeat;
           background-size: 100%;
-          width: 300px;
-          height: 300px;
           border-radius: 50%;
-          display: flex;
           justify-content: center;
           align-items: center;
-          background-color: #989898;
 
           >img {
-            border-radius: 50%;
             width: 200px;
             height: 200px;
-            border-radius: 50%;
             background-color: #f2f3f4;
+            border-radius: 50%;
+            border-radius: 50%;
           }
         }
 
@@ -317,12 +323,12 @@ export default {
           align-items: center;
 
           .option-item {
-            margin: 0 30px;
             width: 40px;
             height: 40px;
-            border-radius: 50%;
-            background-color: #e9e9e9;
+            margin: 0 30px;
             text-align: center;
+            background-color: #e9e9e9;
+            border-radius: 50%;
 
             >i {
               font-size: 20px;
@@ -338,55 +344,55 @@ export default {
     }
 
     .right {
-      flex: 0 0 50%;
-      box-sizing: border-box;
       padding-top: 30px;
-      padding-left: 20px;
       padding-right: 10px;
+      padding-left: 20px;
+      box-sizing: border-box;
+      flex: 0 0 50%;
 
       .right-title {
-        font-size: 20px;
         margin-bottom: 15px;
+        font-size: 20px;
         color: #313131;
 
         .song-tag {
           display: inline-block;
+          padding: 1px;
+          margin-left: 8px;
           font-size: 10px;
           color: #ec4141;
-          border: 1px solid #ec4141;
-          padding: 1px;
           vertical-align: baseline;
-          margin-left: 8px;
           cursor: pointer;
+          border: 1px solid #ec4141;
           border-radius: 2px;
         }
       }
 
       .right-alias {
-        font-size: 16px;
         margin-bottom: 15px;
+        font-size: 16px;
         color: #313131;
       }
 
       .song-info {
-        margin-bottom: 20px;
         display: flex;
+        margin-bottom: 20px;
         flex-direction: row;
         align-items: center;
         flex-wrap: wrap;
 
         .song-info-item {
-          font-size: 12px;
           display: flex;
+          padding-right: 10px;
+          padding-bottom: 5px;
+          font-size: 12px;
+          box-sizing: border-box;
           flex-direction: row;
           flex-wrap: nowrap;
-          padding-right: 10px;
-          box-sizing: border-box;
-          padding-bottom: 5px;
 
           .attribute {
-            color: #666666;
             width: 40px;
+            color: #666;
           }
 
           .info-describe {
@@ -395,16 +401,16 @@ export default {
 
           .info-describe-ablume {
             max-width: 100px;
-            text-overflow: ellipsis;
             overflow: hidden;
+            text-overflow: ellipsis;
             white-space: nowrap;
             cursor: pointer;
           }
 
           .info-describe-songer {
             max-width: 100px;
-            text-overflow: ellipsis;
             overflow: hidden;
+            text-overflow: ellipsis;
             white-space: nowrap;
             cursor: pointer;
 
@@ -412,16 +418,16 @@ export default {
               position: relative;
               margin-left: 10px;
 
-              &:before {
-                content: '|';
-                display: inline-block;
+              &::before {
                 position: absolute;
-                left: -10px;
                 top: 50%;
-                transform: translateY(-50%);
+                left: -10px;
+                display: inline-block;
                 width: 10px;
                 font-size: 12px;
                 text-align: center;
+                content: '|';
+                transform: translateY(-50%);
               }
             }
           }
@@ -430,14 +436,14 @@ export default {
       }
 
       .song-lyric {
+        height: 320px;
         overflow-x: hidden;
         overflow-y: scroll;
-        height: 320px;
 
         .song-lyric-item {
+          position: relative;
           width: 100%;
           padding-bottom: 15px;
-          position: relative;
 
           .lyric-block {
             margin-bottom: 20px;
@@ -453,20 +459,20 @@ export default {
           }
 
           .lyric-active {
-            color: #000001;
             font-size: 16px;
             font-weight: bold;
+            color: #000001;
           }
         }
 
         .nolyric {
+          display: flex;
           width: 100%;
           height: 100%;
-          display: flex;
+          font-size: 14px;
+          color: #666;
           justify-content: center;
           align-items: center;
-          font-size: 14px;
-          color: #666666;
         }
       }
     }
@@ -474,45 +480,45 @@ export default {
 
   .player-footer {
     display: flex;
-    flex-direction: row;
     margin-top: 20px;
+    flex-direction: row;
 
     .player-footer-left {
-      flex: 0 0 60%;
       box-sizing: border-box;
+      flex: 0 0 60%;
 
       .title {
-        color: #000001;
+        margin-top: 10px;
+        margin-bottom: 10px;
         font-size: 16px;
         font-weight: bold;
-        margin-bottom: 10px;
-        margin-top: 10px;
+        color: #000001;
       }
 
       .comment-title {
         margin-bottom: 20px;
 
         .comment-count {
-          color: #d0d0d0;
           font-size: 12px;
+          color: #d0d0d0;
         }
       }
 
       .comment-context {
         display: flex;
-        flex-direction: row;
+        width: 100%;
+        height: 80px;
+        padding: 5px;
         color: #d0d0d0;
         border: 1px solid #D0D0D0;
         border-radius: 4px;
-        width: 100%;
-        height: 80px;
         box-sizing: border-box;
-        padding: 5px;
+        flex-direction: row;
         justify-content: space-between;
 
         .turn-left {
-          flex: 1;
           font-size: 14px;
+          flex: 1;
         }
 
         .turn-right {
@@ -520,25 +526,25 @@ export default {
 
           .tag {
             margin: 0 5px;
-            cursor: pointer;
             font-size: 18px;
+            cursor: pointer;
           }
         }
       }
     }
 
     .player-footer-right {
-      flex: 0 0 40%;
-      box-sizing: border-box;
-      padding-left: 70px;
       padding-right: 10px;
+      padding-left: 70px;
+      box-sizing: border-box;
+      flex: 0 0 40%;
 
       .simi-title {
-        color: #000001;
+        margin-top: 10px;
+        margin-bottom: 10px;
         font-size: 16px;
         font-weight: bold;
-        margin-bottom: 10px;
-        margin-top: 10px;
+        color: #000001;
       }
     }
   }
@@ -547,15 +553,15 @@ export default {
     position: fixed;
     top: 80px;
     right: 13vw;
+    display: flex;
     width: 30px;
     height: 20px;
+    cursor: pointer;
+    background-color: #f2f3f4;
     border: 1px solid #d0d0d0;
-    display: flex;
+    border-radius: 3px;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    border-radius: 3px;
-    background-color: #f2f3f4;
 
     >i {
       font-size: 16px;

@@ -10,6 +10,7 @@
         <HeaderTabs v-if="!isCover" :tabsList="tabsList" :defaultActive="defaultActive" @tabsRouteChange="tabsRouteChange"/>
         <router-view></router-view>
       </div>
+      <router-view name="video"></router-view>
       <Player />
     </div>
 </template>
@@ -92,13 +93,13 @@ export default defineComponent({
   position: fixed;
   top: $header-height;
   left: 0;
+  z-index: 2;
   width: $sidebar-width;
   padding: 15px 10px;
-  border-right: 1px solid #efefef;
-  box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
-  z-index: 2;
+  border-right: 1px solid #efefef;
+  box-sizing: border-box;
 }
 
 .right {
@@ -106,11 +107,11 @@ export default defineComponent({
   top: $header-height;
   right: 0;
   left: $sidebar-width;
-  box-sizing: border-box;
-  padding-left: 30px;
-  background-color: #fff;
-  overflow: scroll;
   z-index: 2;
+  padding-left: 30px;
+  overflow: scroll;
+  background-color: #fff;
+  box-sizing: border-box;
 }
 
 .cover {

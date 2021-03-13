@@ -1,4 +1,5 @@
-import { splitLyric, timeTransformStr } from '@/utils/util'
+import { splitLyric } from '@/utils/util'
+import { getCommentList } from '@/utils/comment'
 
 interface SongDetail {
   id: number,
@@ -16,40 +17,6 @@ interface SongLyric {
   lyricList: any,
   tLyricList: any,
   [params: string]: any
-}
-
-interface SongComment {
-  commentId: number,
-  beRepliedObj: any,
-  content: string,
-  likedCount: number,
-  parentCommentId: number,
-  timeStr: string,
-  avatarUrl: string,
-  nickname: string,
-  userId: number,
-  commentLocationType: number,
-  [params: string]: any
-}
-
-const getCommentList = (comments) => {
-  return comments.map(item => {
-    const { commentId, beReplied, commentLocationType, content, likedCount, parentCommentId, time, user: { avatarUrl, nickname, userId } } = item
-    const timeStr = timeTransformStr(time)
-    const beRepliedObj = parentCommentId !== 0 ? { beRepliedCommentId: beReplied[0].beRepliedCommentId, userId: beReplied[0].user.userId, nickname: beReplied[0].user.nickname, avatarUrl: beReplied[0].user.avatarUrl, content: beReplied[0].content } : {}
-    return {
-      commentId,
-      beRepliedObj,
-      commentLocationType,
-      content,
-      likedCount,
-      parentCommentId,
-      timeStr,
-      avatarUrl,
-      nickname,
-      userId
-    } as SongComment
-  })
 }
 
 export const transformSongDetail = (res) => {
@@ -73,7 +40,7 @@ export const transformSongDetail = (res) => {
 }
 
 export const transformSongLyric = (res) => {
-  if (res && res.data.nolyric) {
+  if ((res && res.data.nolyric) || (res && res.data.uncollected)) {
     return {
       lyricList: '',
       tLyricList: ''

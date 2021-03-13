@@ -77,26 +77,27 @@ export default {
 
         .img-box {
           position: relative;
-          border-radius: 8px;
           overflow: hidden;
+          border-radius: 8px;
 
           .img-item {
             width: 100%;
             height: 100%;
             border-radius: 8px;
           }
+
           .img-title {
             position: absolute;
-            bottom: 5px;
             right: 1px;
+            bottom: 5px;
             height: 15px;
-            font-size: 10px;
             padding: 0 6px;
-            border-radius: 8px;
-            background-color: $primary-color;
-            opacity: .8;
-            text-align: center;
+            font-size: 10px;
             line-height: 1.3;
+            text-align: center;
+            background-color: $primary-color;
+            border-radius: 8px;
+            opacity: .8;
           }
         }
       }
@@ -106,10 +107,10 @@ export default {
       width: 20px;
       height: 20px;
       padding: 2px;
-      border-radius: 50%;
-      background-color: #989898;
-      opacity: 0;
       text-align: center;
+      background-color: #989898;
+      border-radius: 50%;
+      opacity: 0;
 
       &:hover {
         opacity: .8;
@@ -120,6 +121,7 @@ export default {
       width: 6px;
       height: 6px;
     }
+
     /* 设置 Swiper风格 scss变量无效 */
     --swiper-pagination-color: #EC4141;
     --swiper-theme-color: #EC4141;

@@ -44,9 +44,9 @@ export default {
 
 <style lang="scss" scoped>
 .lastest-music-item-left {
-  border-radius: 5px;
   position: relative;
   cursor: pointer;
+  border-radius: 5px;
 
   img {
     width: 48px;
@@ -58,42 +58,43 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     font-size: 25px;
     color: #f2f3f4;
     border-radius: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 
 .lastest-music-item-right {
-  flex: 1;
-  box-sizing: border-box;
-  padding-left: 12px;
-  height: 48px;
   display: flex;
+  height: 48px;
+  padding-left: 12px;
+  box-sizing: border-box;
+  flex: 1;
   justify-content: space-between;
   flex-direction: column;
 
   .music-name {
-    font-size: 14px;
     padding-top: 2px;
+    font-size: 14px;
+
     .music-alias {
-      color: #666666;
+      color: #666;
     }
   }
 
   .music-item-footer {
     display: flex;
-    align-items: center;
     padding-bottom: 2px;
+    align-items: center;
 
     .music-type {
-      border: 1.5px solid #ec4141;
-      border-radius: 4px;
-      color: #ec4141;
+      margin-right: 5px;
       font-size: 14px;
       font-weight: 600;
-      margin-right: 5px;
+      color: #ec4141;
+      border: 1.5px solid #ec4141;
+      border-radius: 4px;
     }
 
     .mv {
@@ -107,7 +108,7 @@ export default {
         cursor: pointer;
 
         &:hover {
-          color: #333333;
+          color: #333;
         }
       }
     }

@@ -2,7 +2,7 @@
   <div v-if="isKongbai" class="kongbai"></div>
   <ul v-else class="page">
     <li
-      class="page-item trun-rotate-180"
+      class="page-item trun-rotate-180 del-padding"
       @click="preOffset"
       :class="{ 'option': turnLeft}"
     >
@@ -33,12 +33,13 @@
     <li
       class="page-item"
       :class="{'page-item-active': offset === lens - 1, 'option': offset !== lens - 1}"
+      :style="{ display: lens === 1 ? 'none': 'block'}"
       @click="changeOffset(lens - 1)"
     >
       <span>{{lens}}</span>
     </li>
     <li
-      class="page-item"
+      class="page-item del-padding"
       @click="nextOffset"
       :class="{'option': turnRight}"
     >
@@ -59,7 +60,7 @@ export default {
     },
     limit: {
       type: Number,
-      default: 0
+      default: 20
     },
     offset: {
       type: Number,
@@ -173,6 +174,7 @@ export default {
 .kongbai {
   height: 50px;
 }
+
 .page {
   display: flex;
   justify-content: center;
@@ -180,21 +182,28 @@ export default {
   height: 50px;
 
   .page-item {
-    width: 25px;
-    height: 25px;
     display: flex;
+    box-sizing: border-box;
+    min-width: 5px;
+    padding: 0 10px;
+    height: 25px;
+    margin: 0 3px;
+    font-size: 14px;
+    color: #313131;
+    cursor: default;
+    line-height: 25px;
+    border: 1px solid #D0D0D0;
+    border-radius: 4px;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
-    border-radius: 4px;
-    border: 1px solid #D0D0D0;
-    color: #313131;
-    margin: 0 3px;
-    cursor: default;
 
     .iconyou {
       font-size: 25px;
     }
+  }
+
+  .del-padding {
+    padding: 0;
   }
 
   .page-item-hidden {
@@ -202,8 +211,8 @@ export default {
   }
 
   .page-item-active {
-    background-color: #ec4141;
     color: #f2f3f4;
+    background-color: #ec4141;
 
     &:hover {
       background-color: #ec4141;

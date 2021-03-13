@@ -31,23 +31,23 @@ export default {
 
 <style lang="scss" scoped>
 .header-tabs {
-  display: flex;
   position: absolute;
   top: 0;
   left: 0;
-  flex-direction: row;
-  height: 60px;
-  align-items: center;
-  width: 100%;
   z-index: 3;
-  background-color: #fff;
+  display: flex;
+  width: 100%;
+  height: 60px;
   padding-left: 30px;
+  background-color: #fff;
   box-sizing: border-box;
+  flex-direction: row;
+  align-items: center;
 
   .header-tabs-item {
-    font-size: 16px;
-    color: #333333;
     margin-right: 24px;
+    font-size: 16px;
+    color: #333;
     cursor: pointer;
   }
 
@@ -55,16 +55,17 @@ export default {
     position: relative;
     font-size: 20px;
     font-weight: bold;
-    &:after {
-      content: '';
-      display: block;
+
+    &::after {
       position: absolute;
+      bottom: -10px;
+      left: 10%;
+      display: block;
       width: 80%;
       height: 3px;
-      left: 10%;
-      bottom: -10px;
       background-color: #ec4141;
       border-radius: 3px;
+      content: '';
     }
   }
 }

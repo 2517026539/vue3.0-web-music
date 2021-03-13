@@ -54,11 +54,11 @@ export default {
 
 .ownerSend-title {
   height: 45px;
-  line-height: 1.2;
-  font-size: 14px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: normal;
   margin-top: 5px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: normal;
 }
 </style>

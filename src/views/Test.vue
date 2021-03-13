@@ -1,16 +1,15 @@
 <template>
-  <i class="iconfont iconshousuo"></i>
+  <span>regexpTest</span>
 </template>
 
 <script lang="ts">
+import { ref } from 'vue'
 
 export default {
   name: 'Test',
   setup () {
-    const arr = new Map([[1, 2], [23, 12], [123, 235]])
-    return {
-      arr
-    }
+    const reg = ref<RegExp>(/[A-Za-z]+/g)
+    console.log(reg.value.test('21213'))
   }
 }
 </script>

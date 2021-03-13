@@ -21,7 +21,12 @@
     </ul>
     <h1 class="recommend-title" @click="handleChangeRecommendMv">推荐MV></h1>
     <ul class="recommend-mv-list">
-      <li class="recommend-mv-item" v-for="item of recommendMvList" :key="item">
+      <li
+        class="recommend-mv-item"
+        v-for="item of recommendMvList"
+        :key="item"
+        @click="clickHandleMv(item.id)"
+      >
         <RecommendMv :recommendMvData="item"/>
       </li>
     </ul>
@@ -100,6 +105,10 @@ export default {
       player.changeSonglist({ list, id })
     }
 
+    const clickHandleMv = (id:number):void => {
+      router.push({ name: 'video', params: { id } })
+    }
+
     onMounted(() => {
       init()
     })
@@ -112,6 +121,7 @@ export default {
       handleChangeLastestMusic,
       handleChangeRecommendMv,
       selectMusic,
+      clickHandleMv,
       personalized,
       ownerSendList,
       lastestMusicList,
@@ -129,30 +139,31 @@ export default {
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
 .recommend {
   width: 100%;
   height: 100%;
   padding-top: 60px;
-  box-sizing: border-box;
   padding-right: 30px;
   overflow-x: hidden;
+  box-sizing: border-box;
 
   .recommend-title {
+    margin-top: 10px;
+    margin-bottom: 15px;
     font-size: 20px;
     font-weight: bold;
     color: #000001;
     cursor: pointer;
-    margin-bottom: 15px;
-    margin-top: 10px;
   }
 
   .playlist {
     @extend .recommend-item;
 
     .playlist-item {
-      flex: 0 0 18.5%;
       margin-bottom: 10px;
       cursor: pointer;
+      flex: 0 0 18.5%;
     }
   }
 
@@ -160,9 +171,9 @@ export default {
     @extend .recommend-item;
 
     .ownerSend-item {
-      flex: 0 0 32%;
       margin-bottom: 10px;
       cursor: pointer;
+      flex: 0 0 32%;
     }
   }
 
@@ -170,10 +181,10 @@ export default {
     @extend .recommend-item;
 
     .lastest-music-item {
-      flex: 0 0 32.5%;
+      display: flex;
       margin-bottom: 15px;
       border-radius: 5px;
-      display: flex;
+      flex: 0 0 32.5%;
 
       &:hover {
         background-color: #e9e9e9;
@@ -185,9 +196,9 @@ export default {
     @extend .recommend-item;
 
     .recommend-mv-item {
-      flex: 0 0 31%;
       margin-bottom: 10px;
       border-radius: 5px;
+      flex: 0 0 31%;
     }
   }
 }

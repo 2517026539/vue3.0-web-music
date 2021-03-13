@@ -42,21 +42,21 @@ export default defineComponent({})
 
 <style lang="scss" scoped>
 .active {
-  background-color: #f6f6f7;
   font-size: 18px;
   font-weight: bold;
+  background-color: #f6f6f7;
 }
 
 .sidebar-main-item {
   display: flex;
-  align-items: center;
   height: 30px;
   padding-left: 5px;
-  border-radius: 5px;
-  box-sizing: border-box;
   margin-bottom: 3px;
   font-size: 16px;
   cursor: pointer;
+  border-radius: 5px;
+  box-sizing: border-box;
+  align-items: center;
 
   .sidebar-icon {
     flex: 0 0 25px;

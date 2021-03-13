@@ -127,35 +127,35 @@ export default {
 .progress-bar-item {
 
   .progress-bar-content {
-    height: 5px;
     position: relative;
     width: 100%;
-    border-radius: 5px;
+    height: 5px;
     background-color: #e6e6e6;
+    border-radius: 5px;
 
     .progress-bar-done {
-      border-radius: 5px;
-      height: 5px;
       width: 0;
+      height: 5px;
       background-color: #ff4e4e;
+      border-radius: 5px;
     }
 
     .progress-bar-btn {
       position: absolute;
+      top: 50%;
       z-index: 3;
-      height: 5px;
       width: 5px;
+      height: 5px;
+      background-color: #ec4141;
       border-radius: 50%;
       opacity: 0;
-      background-color: #ec4141;
-      top: 50%;
       transform: translate(-50%, -2.5px);
 
       &:hover {
-        height: 10px;
         width: 10px;
-        transform: translate(-50%, -5px);
+        height: 10px;
         opacity: 1;
+        transform: translate(-50%, -5px);
       }
     }
   }
@@ -165,9 +165,9 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 99;
+  display: none;
   width: 100%;
   height: 100%;
-  display: none;
-  z-index: 99;
 }
 </style>

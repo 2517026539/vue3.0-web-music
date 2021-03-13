@@ -74,116 +74,111 @@ export default {
   padding-top: 20px;
 
   .title {
-    color: #000001;
+    margin-top: 10px;
+    margin-bottom: 10px;
     font-size: 16px;
     font-weight: bold;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    color: #000001;
   }
 
   .lastest-comment {
     padding-top: 10px;
 
     .lastest-comment-context {
-      @extend .comment-style;
-    }
-  }
-}
-
-.comment-style {
-  display: flex;
-  flex-direction: row;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #e9e9e9;
-  margin-bottom: 20px;
-
-  .wonder-comment-context-left {
-    padding: 5px 10px 0 0;
-
-    img {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      background-color: #d0d0d0;
-      cursor: pointer;
-    }
-  }
-
-  .wonder-comment-context-right {
-    font-size: 12px;
-    flex: 1;
-
-    .wonder-comment-content {
-      padding-bottom: 10px;
-      line-height: 1.5;
-      color: #313131;
-
-      .reviewer-name {
-        color: #0c73c2;
-        cursor: pointer;
-      }
-    }
-
-    .argued {
-      color: #8b8b8f;
-      padding: 6px;
-      margin-bottom: 10px;
-      box-sizing: border-box;
-      background-color: #f5f5f6;
-      line-height: 1.2;
-      letter-spacing: .5px;
-      border-radius: 2px;
-      width: 100%;
-
-      .reviewer-name {
-        color: #0c73c2;
-        cursor: pointer;
-      }
-    }
-
-    .comment-fun {
       display: flex;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #e9e9e9;
       flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
 
-      .comment-time {
-        color: #D0D0D0;
+      .wonder-comment-context-left {
+        padding: 5px 10px 0 0;
+
+        img {
+          width: 45px;
+          height: 45px;
+          cursor: pointer;
+          background-color: #d0d0d0;
+          border-radius: 50%;
+        }
       }
 
-      .comment-tag {
-        display: flex;
-        align-items: center;
-        color: #676767;
+      .wonder-comment-context-right {
+        font-size: 12px;
+        flex: 1;
 
-        .showJubao {
-          display: none;
-        }
+        .wonder-comment-content {
+          padding-bottom: 10px;
+          line-height: 1.5;
+          color: #313131;
 
-        .tag {
-
-          i, span {
+          .reviewer-name {
+            color: #0c73c2;
             cursor: pointer;
           }
         }
 
-        .gekai {
-          padding: 0 10px;
-          color: #D0D0D0;
+        .argued {
+          width: 100%;
+          padding: 6px;
+          margin-bottom: 10px;
+          line-height: 1.2;
+          letter-spacing: .5px;
+          color: #8b8b8f;
+          background-color: #f5f5f6;
+          border-radius: 2px;
+          box-sizing: border-box;
+
+          .reviewer-name {
+            color: #0c73c2;
+            cursor: pointer;
+          }
         }
-      }
 
-      &:hover {
+        .comment-fun {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
 
-        .comment-tag {
+          .comment-time {
+            color: #D0D0D0;
+          }
 
-          .showJubao {
-            display: inline-block;
+          .comment-tag {
+            display: flex;
+            color: #676767;
+            align-items: center;
+
+            .showJubao {
+              display: none;
+            }
+
+            .tag {
+
+              i, span {
+                cursor: pointer;
+              }
+            }
+
+            .gekai {
+              padding: 0 10px;
+              color: #D0D0D0;
+            }
+          }
+
+          &:hover {
+
+            .comment-tag {
+
+              .showJubao {
+                display: inline-block;
+              }
+            }
           }
         }
       }
     }
   }
-
 }
 </style>

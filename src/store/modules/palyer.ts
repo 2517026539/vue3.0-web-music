@@ -12,6 +12,7 @@ const GET_SIMISONG = 'getSimiSongList'
 const CHANGE_SONGLIST = 'changeSonglist'
 const CHANGE_VOLUME = 'changeVolume'
 const CHANGE_PLAYING = 'changePlaying'
+const STOP_PLAYING = 'stopPlaying'
 const NEXT_SONG = 'nextSong'
 const PRE_SONG = 'preSong'
 const CHANGE_SONGDETAIL = 'changeSongDetail'
@@ -81,6 +82,11 @@ class Player extends VuexModule {
   }
 
   @Mutation
+  [STOP_PLAYING] () {
+    this.playing = false
+  }
+
+  @Mutation
   [NEXT_SONG] () {
     if (this.currentIndex === this.currentSongLists.length - 1) {
       this.currentIndex = 0
@@ -139,7 +145,7 @@ class Player extends VuexModule {
       let currentSelectLyricTime = 0
       for (const key of this.lyricList.keys()) {
         if (key === '') {
-          return
+          break
         } else {
           if (key <= time) {
             currentSelectLyricTime = key

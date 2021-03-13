@@ -38,20 +38,20 @@ export default {
 <style lang="scss" scoped>
 .simi-song {
   display: flex;
-  flex-direction: row;
-  align-items: center;
   width: 100%;
   padding: 5px;
-  box-sizing: border-box;
   border-radius: 4px;
+  box-sizing: border-box;
+  flex-direction: row;
+  align-items: center;
 
   .simi-left {
     position: relative;
     width: 45px;
     height: 45px;
-    border-radius: 4px;
-    background-color: #D0D0D0;
     cursor: pointer;
+    background-color: #D0D0D0;
+    border-radius: 4px;
 
     >img {
       width: 45px;
@@ -63,27 +63,27 @@ export default {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
       font-size: 25px;
       color: #f2f3f4;
+      transform: translate(-50%, -50%);
     }
   }
 
   .simi-right {
-    flex: 1;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    box-sizing: border-box;
     padding-left: 10px;
     cursor: default;
+    box-sizing: border-box;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
 
     .song {
-      font-size: 14px;
       padding-bottom: 4px;
+      font-size: 14px;
 
       .song-name {
-        color: #000000;
+        color: #000;
       }
 
       .song-alias {
@@ -94,7 +94,7 @@ export default {
     .singer {
       padding-top: 4px;
       font-size: 14px;
-      color: #666666;
+      color: #666;
     }
   }
 

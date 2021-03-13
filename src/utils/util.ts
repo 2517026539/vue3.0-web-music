@@ -44,6 +44,13 @@ export const transformTime = (time:number):string => {
   return minute + ':' + second
 }
 
+/* 时间转化 */
+export const transformTime1 = (time: number): string => {
+  const minute:string = Math.floor(time / 1000 / 60).toString().padStart(2, '0')
+  const second:string = Math.floor((time / 1000 - Math.floor(time / 1000 / 60) * 60)).toString().padStart(2, '0')
+  return minute + ':' + second
+}
+
 /* 字符串转化时间 */
 export const strTransformTime = (time: string): number => {
   // 00:00.000 或者 00:00.00

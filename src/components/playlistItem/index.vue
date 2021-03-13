@@ -64,8 +64,8 @@ export default {
     position: absolute;
     top: 5px;
     right: 5px;
-    color: #f2f3f4;
     display: flex;
+    color: #f2f3f4;
     align-items: center;
 
     .count {
@@ -76,8 +76,8 @@ export default {
 
   .bofang {
     position: absolute;
-    bottom: 10px;
     right: 10px;
+    bottom: 10px;
     font-size: 25px;
     color: #f2f3f4;
   }
@@ -89,12 +89,12 @@ export default {
 
 .song-title {
   height: 45px;
+  margin-top: 3px;
   overflow: hidden;
+  font-size: 14px;
+  line-height: 1.2;
   text-overflow: ellipsis;
   white-space: normal;
-  font-size: 14px;
-  margin-top: 3px;
-  line-height: 1.2;
 
   &:hover {
     color: #000001;

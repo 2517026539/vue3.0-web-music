@@ -47,7 +47,6 @@ export default {
       showTheme.value = !showTheme.value
     }
     const clickOutsideClose = (): void => {
-      console.log(1)
       showTheme.value = false
     }
     return {
@@ -76,7 +75,7 @@ export default {
   top: 0;
   right: 0;
   left: 0;
-  z-index: 6;
+  z-index: 8;
   display: flex;
   height: $header-height;
   flex-wrap: nowrap;
