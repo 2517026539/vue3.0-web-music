@@ -32,19 +32,16 @@ function createCallbackFn (el: any, binding: DirectiveBinding) {
 
 const clickOutside = {
   beforeMount (el, binding) {
-    // console.log('beforMount')
     nodelist.set(el, {
       callback: createCallbackFn(el, binding)
     })
   },
   beforeUpdate (el, binding) {
-    // console.log('beforeUpdate')
     nodelist.set(el, {
       callback: createCallbackFn(el, binding)
     })
   },
   unmounted (el) {
-    // console.log('unmounted')
     nodelist.delete(el)
   }
 }

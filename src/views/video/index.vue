@@ -202,7 +202,7 @@ export default {
     // comment页数偏移数变化
     const changeOffset = async (num) => {
       offset.value = num
-      const { commentsList } = await getLastComment(route.params.id, offset.value, limit.value)
+      const { commentsList } = await getVideoLastComment(route.params.id, offset.value, limit.value)
       commentObj.commentsList = commentsList
       nextTick(() => {
         // @ts-ignore

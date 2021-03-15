@@ -17,11 +17,11 @@ export function getSongLyric (id) {
 }
 
 export function getSongComment ({ id, limit, offset }) {
-  return getRequest(REQUEST_URL.songComment, { id, limit, offset }).then(transformComment)
+  return getRequest(REQUEST_URL.songComment, { id, limit, offset: offset * limit }).then(transformComment)
 }
 
 export function getSongLastedComment ({ id, limit, offset }) {
-  return getRequest(REQUEST_URL.songComment, { id, limit, offset }).then(transformLastComment)
+  return getRequest(REQUEST_URL.songComment, { id, limit, offset: offset * limit }).then(transformLastComment)
 }
 
 export function getSimiSong (id) {

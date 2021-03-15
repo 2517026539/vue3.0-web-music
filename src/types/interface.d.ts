@@ -50,3 +50,27 @@ declare interface Related {
   }[],
   [params: string]: any
 }
+
+
+// 歌单详情
+declare interface PlaylistDetail {
+  id: number;
+  name: string;
+  coverImgUrl: string;
+  userId: number;
+  nickname: string;
+  avatarUrl: string;
+  tags: string;
+  playCount: number | string;
+  subscribedCount: number | string;
+  shareCount: number | string;
+  trackCount: number;
+  commentCount: number;
+  createTime: string;
+  subDescription: string;
+  description: string;
+  songs: Song[];
+  [params: string]: any;
+}
+
+

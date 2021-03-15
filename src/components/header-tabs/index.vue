@@ -1,6 +1,6 @@
 <template>
   <ul class="header-tabs">
-    <li class="header-tabs-item" :class="{active : item.match === props.defaultActive}" v-for="item of props.tabsList" :key="item.name">
+    <li class="header-tabs-item" :class="{active : item.match === defaultActive}" v-for="item of tabsList" :key="item.name">
       <span class="header-tabs-item-title" @click="clickHandleChange(item.path)">{{ item.name }}</span>
     </li>
   </ul>
@@ -22,7 +22,6 @@ export default {
       context.emit('tabsRouteChange', path)
     }
     return {
-      props,
       clickHandleChange
     }
   }

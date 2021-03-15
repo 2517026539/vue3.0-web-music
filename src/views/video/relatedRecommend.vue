@@ -52,7 +52,6 @@ export default {
     }
     // 获取video id,并触发更新
     const handleClickVideo = (id) => {
-      console.log(id)
       router.push({ name: 'video', params: { id } })
     }
     return {

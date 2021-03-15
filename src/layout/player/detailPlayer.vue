@@ -451,7 +451,9 @@ export default {
             font-size: 16px;
             color: #989898;
 
-            .lyric {}
+            .lyric {
+              line-height: 1.4;
+            }
 
             .t-lyric {
               padding-top: 5px;

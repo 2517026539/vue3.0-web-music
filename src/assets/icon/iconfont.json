@@ -6,6 +6,48 @@
   "description": "vue3.0 web music",
   "glyphs": [
     {
+      "icon_id": "12195265",
+      "name": "hot",
+      "font_class": "hot",
+      "unicode": "eca8",
+      "unicode_decimal": 60584
+    },
+    {
+      "icon_id": "654295",
+      "name": "笑脸",
+      "font_class": "xiaolian",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "2471410",
+      "name": "主题",
+      "font_class": "zhuti",
+      "unicode": "e682",
+      "unicode_decimal": 59010
+    },
+    {
+      "icon_id": "5072215",
+      "name": "咖啡",
+      "font_class": "coffee",
+      "unicode": "e666",
+      "unicode_decimal": 58982
+    },
+    {
+      "icon_id": "5652682",
+      "name": "风格",
+      "font_class": "fengge",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "6582366",
+      "name": "网络",
+      "font_class": "wangluo",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
       "icon_id": "868003",
       "name": "icon-井",
       "font_class": "iconjing",

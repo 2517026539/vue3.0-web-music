@@ -28,11 +28,11 @@ export const getMvZan = (mvid) => {
 }
 
 export const getMvComment = (id, offset = 0, limit = 20) => {
-  return getRequest(REQUEST_URL.mvComment, { id, offset, limit }).then(translateComment)
+  return getRequest(REQUEST_URL.mvComment, { id, offset: offset * limit, limit }).then(translateComment)
 }
 
 export const getLastComment = (id, offset, limit) => {
-  return getRequest(REQUEST_URL.mvComment, { id, offset, limit }).then(translateLastComment)
+  return getRequest(REQUEST_URL.mvComment, { id, offset: offset * limit, limit }).then(translateLastComment)
 }
 
 export const getRelated = (id) => {
@@ -52,9 +52,9 @@ export const getVideoZan = (vid) => {
 }
 
 export const getVideoComment = (id, offset = 0, limit = 20) => {
-  return getRequest(REQUEST_URL.videoComment, { id, offset, limit }).then(translateComment)
+  return getRequest(REQUEST_URL.videoComment, { id, offset: offset * limit, limit }).then(translateComment)
 }
 
 export const getVideoLastComment = (id, offset, limit) => {
-  return getRequest(REQUEST_URL.videoComment, { id, offset, limit }).then(translateLastComment)
+  return getRequest(REQUEST_URL.videoComment, { id, offset: offset * limit, limit }).then(translateLastComment)
 }

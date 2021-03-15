@@ -10,6 +10,10 @@
       <i class="iconfont iconbofang"></i>
       <span class="count">{{playlistItem.playCount}}</span>
     </div>
+    <div class="creator" v-if="playlistItem.userId" :title="playlistItem.nickname">
+      <i class="iconfont icongeren"></i>
+      <span class="creator-name">{{playlistItem.nickname}}</span>
+    </div>
     <i class="iconfont icon65zanting bofang" v-show="bofang"></i>
   </div>
   <p class="song-title">{{playlistItem.name}}</p>
@@ -71,6 +75,23 @@ export default {
     .count {
       padding-left: 2px;
       font-size: 14px;
+    }
+  }
+
+  .creator {
+    position: absolute;
+    bottom: 12px;
+    left: 10px;
+    font-size: 12px;
+    color: #f2f3f4;
+    cursor: pointer;
+    display: flex;
+
+    .creator-name {
+      max-width: 60px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 

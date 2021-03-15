@@ -1,16 +1,13 @@
 <template>
-  <span>regexpTest</span>
+  <span>test</span>
 </template>
 
 <script lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { playlist } from '@/store/modules/playlists'
 
 export default {
-  name: 'Test',
-  setup () {
-    const reg = ref<RegExp>(/[A-Za-z]+/g)
-    console.log(reg.value.test('21213'))
-  }
+  name: 'Test'
 }
 </script>
 
